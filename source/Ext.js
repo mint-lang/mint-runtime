@@ -1,4 +1,5 @@
 import { Equals } from "./Symbols";
+import { compare } from "./Utils";
 
 Date.prototype[Equals] = function(other) {
   return this.toISOString() === other.toISOString();
@@ -22,6 +23,6 @@ Array.prototype[Equals] = function(other) {
   }
 
   return !!this.filter((item, index) => {
-    return Mint.compare(item, other[index]);
+    return compare(item, other[index]);
   }).length;
 };

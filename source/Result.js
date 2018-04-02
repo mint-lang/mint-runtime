@@ -1,4 +1,5 @@
 import { Equals } from "./Symbols";
+import { compare } from "./Utils";
 
 class Result {
   constructor(value) {
@@ -7,7 +8,7 @@ class Result {
 
   [Equals](other) {
     if (other instanceof this.constructor) {
-      return Mint.compare(other.value, this.value);
+      return compare(other.value, this.value);
     } else {
       return false;
     }
