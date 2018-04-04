@@ -1,5 +1,5 @@
+import { compare } from "./Compare";
 import { Equals } from "./Symbols";
-import { compare } from "./Utils";
 
 export default class Record {
   constructor(data) {
@@ -12,6 +12,7 @@ export default class Record {
     if (!(other instanceof Record)) {
       return false;
     }
+
     if (Object.keys(this).length !== Object.keys(other).length) {
       return false;
     }

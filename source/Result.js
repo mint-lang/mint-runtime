@@ -1,5 +1,5 @@
+import { compare } from "./Compare";
 import { Equals } from "./Symbols";
-import { compare } from "./Utils";
 
 class Result {
   constructor(value) {

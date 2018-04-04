@@ -1,6 +1,6 @@
-import Main from '../source/Main.js'
+import Main from "../source/Main.js";
 
-const { compare, Nothing, Just } = Main
+const { compare, Nothing, Just } = Main;
 
 test("comparing nothing", () => {
   expect(compare(new Nothing(), new Nothing())).toBe(true);

@@ -5,16 +5,12 @@ export default class Store {
   }
 
   setState(props, callback) {
-    let prev = this.state;
     this.props = Object.assign({}, this.state, props);
-
-    Mint.diff(this.__displayName, prev, this.state);
 
     for (let listener of this.listeners) {
       listener.forceUpdate();
     }
 
-    Mint.forceUpdate();
     callback();
   }
 

@@ -1,7 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "test": "jest",
+    "format": "prettier --write source/** tests/**"
   },
   "dependencies": {
     "babel-core": "6.26.0",
@@ -9,7 +11,6 @@
     "babel-preset-env": "^1.6.1",
     "date-fns": "^1.29.0",
     "jest": "^22.4.3",
-    "path-parser": "^4.0.2",
     "prettier": "^1.11.1",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
@@ -18,10 +19,15 @@
     "rollup-plugin-commonjs": "^9.1.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-replace": "^2.0.0",
-    "rollup-plugin-uglify": "^3.0.0"
+    "rollup-plugin-uglify": "^3.0.0",
+    "route-parser": "^0.0.5"
   },
   "jest": {
-    "coverageReporters": ["html", "text"],
+    "coverageReporters": [
+      "html",
+      "text"
+    ],
+    "testURL": "http://localhost/",
     "collectCoverage": true,
     "browser": true,
     "testMatch": [

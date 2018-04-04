@@ -1,16 +1,19 @@
 import { Equals } from "./Symbols";
+import Record from "./Record";
 
-export const compare = (a, b) => {
-  if (a[Equals]) {
-    return a[Equals](b);
-  } else {
-    if (b[Equals]) {
-      return b[Equals](a);
-    } else {
-      console.warn(
-        `Could not compare type ${a} with ${b} falling back to === for comparision`
-      );
-      return a === b;
-    }
+export const update = (data, new_data) => {
+  return new Record(Object.assign(Object.create(null), data, new_data));
+};
+
+export const navigate = url => {
+  if (window.location.pathname !== url) {
+    window.history.pushState({}, "", url);
+    dispatchEvent(new PopStateEvent("popstate"));
   }
+};
+
+export const insertStyles = styles => {
+  let style = document.createElement("style");
+  document.head.appendChild(style);
+  style.innerHTML = styles;
 };

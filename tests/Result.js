@@ -1,6 +1,6 @@
-import Main from '../source/Main.js'
+import Main from "../source/Main.js";
 
-const { compare, Ok, Err } = Main
+const { compare, Ok, Err } = Main;
 
 test("comparing same errors", () => {
   expect(compare(new Err("A"), new Err("A"))).toBe(true);

@@ -1,5 +1,5 @@
+import { compare } from "./Compare";
 import { Equals } from "./Symbols";
-import { compare } from "./Utils";
 
 Date.prototype[Equals] = function(other) {
   return this.toISOString() === other.toISOString();
