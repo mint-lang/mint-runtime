@@ -3,6 +3,7 @@
   "scripts": {
     "build": "rollup -c",
     "test": "jest",
+    "lint": "prettier --list-different source/** tests/**",
     "format": "prettier --write source/** tests/**"
   },
   "dependencies": {

@@ -1,15 +1,22 @@
-export default class TextContext {
+export default class TestContext {
   constructor(subject, teardown) {
-    this.teardown = teardown || (() => {});
+    this.teardown = teardown;
     this.subject = subject;
     this.error = null;
     this.steps = [];
   }
 
   async run() {
-    return new Promise((resolve, reject) => {
-      this.next(resolve, reject);
-    }).then(() => this.teardown());
+    let result;
+    try {
+      result = await new Promise(this.next.bind(this));
+    } catch (error) {
+      result = error;
+    } finally {
+      this.teardown && this.teardown();
+    }
+
+    return result;
   }
 
   async next(resolve, reject) {
