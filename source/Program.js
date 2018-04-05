@@ -40,10 +40,10 @@ export default class Program {
     }
   }
 
-  render() {
-    if (typeof $Main != "undefined") {
+  render(main) {
+    if (typeof main != "undefined") {
       this.handlePopState();
-      ReactDOM.render(React.createElement($Main), this.root);
+      ReactDOM.render(React.createElement(main), this.root);
     }
   }
 

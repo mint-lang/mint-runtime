@@ -59,8 +59,7 @@ describe("render", () => {
   });
 
   test("it renders the main component", () => {
-    global.$Main = $Main;
-    program.render();
+    program.render($Main);
     expect(program.root.querySelector("div").textContent).toBe("TEST");
   });
 });

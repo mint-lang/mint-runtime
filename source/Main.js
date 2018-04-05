@@ -24,6 +24,7 @@ export default {
   update: update,
 
   Component: React.PureComponent,
+  ReactDOM: ReactDOM,
 
   TestContext: TestContext,
   Provider: Provider,
