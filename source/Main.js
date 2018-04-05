@@ -1,3 +1,4 @@
+import ReactDOM from "react-dom";
 import DateFNS from "date-fns";
 import React from "react";
 
@@ -36,6 +37,9 @@ export default {
 
   Record: Record,
   Date: DateFNS,
+
+  createPortal: ReactDOM.createPortal,
+  createElement: React.createElement,
 
   Symbols: {
     Equals: Equals
