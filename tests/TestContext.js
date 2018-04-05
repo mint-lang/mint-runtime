@@ -26,7 +26,13 @@ describe("teardown", () => {
       throw "WTF";
     });
 
-    const result = await context.run();
+    let result
+
+    try {
+      await context.run();
+    } catch (error) {
+      result = error
+    }
 
     expect(result).toBe("WTF");
     expect(teardown.mock.calls.length).toBe(1);

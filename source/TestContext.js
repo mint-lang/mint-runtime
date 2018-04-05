@@ -2,16 +2,14 @@ export default class TestContext {
   constructor(subject, teardown) {
     this.teardown = teardown;
     this.subject = subject;
-    this.error = null;
     this.steps = [];
   }
 
   async run() {
     let result;
+
     try {
       result = await new Promise(this.next.bind(this));
-    } catch (error) {
-      result = error;
     } finally {
       this.teardown && this.teardown();
     }
@@ -26,9 +24,9 @@ export default class TestContext {
       try {
         this.subject = await step(this.subject);
       } catch (error) {
-        this.error = error;
-        reject(this.error.toString());
+        return reject(error.toString());
       }
+
       if (this.steps.length) {
         this.next(resolve, reject);
       } else {
