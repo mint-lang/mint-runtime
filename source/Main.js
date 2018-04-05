@@ -22,7 +22,7 @@ export default {
   navigate: navigate,
   update: update,
 
-  Component: React.Component,
+  Component: React.PureComponent,
 
   TestContext: TestContext,
   Provider: Provider,
