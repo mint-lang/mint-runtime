@@ -26,12 +26,12 @@ describe("teardown", () => {
       throw "WTF";
     });
 
-    let result
+    let result;
 
     try {
       await context.run();
     } catch (error) {
-      result = error
+      result = error;
     }
 
     expect(result).toBe("WTF");
