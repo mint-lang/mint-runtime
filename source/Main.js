@@ -36,8 +36,8 @@ export default {
   Err: Err,
   Ok: Ok,
 
+  DateFNS: DateFNS,
   Record: Record,
-  Date: DateFNS,
 
   createPortal: ReactDOM.createPortal,
   createElement: React.createElement,
