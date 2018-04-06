@@ -2,7 +2,7 @@ import { compare } from "./Compare";
 import { Equals } from "./Symbols";
 
 Date.prototype[Equals] = function(other) {
-  return this.toISOString() === other.toISOString();
+  return +this === +other;
 };
 
 Number.prototype[Equals] = function(other) {
