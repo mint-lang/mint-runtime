@@ -1,6 +1,10 @@
 import { compare } from "./Compare";
 import { Equals } from "./Symbols";
 
+Symbol.prototype[Equals] = function(other) {
+  return this.valueOf() === other;
+};
+
 Date.prototype[Equals] = function(other) {
   return +this === +other;
 };
