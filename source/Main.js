@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import DateFNS from "date-fns";
 import React from "react";
 
-import { insertStyles, update, navigate } from "./Utils";
+import { insertStyles, update, navigate, normalizeEvent } from "./Utils";
 import { Nothing, Just } from "./Maybe";
 import { compare } from "./Compare";
 import { Equals } from "./Symbols";
@@ -17,10 +17,12 @@ import Store from "./Store";
 import "./Ext";
 
 export default {
-  compare: compare,
   program: new Program(),
+
+  normalizeEvent: normalizeEvent,
   insertStyles: insertStyles,
   navigate: navigate,
+  compare: compare,
   update: update,
 
   Component: React.PureComponent,
