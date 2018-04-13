@@ -9,6 +9,11 @@ test("comparing same arrays", () => {
   expect(Mint.compare(["A"], ["A"])).toBe(true);
 });
 
+test("comparing empty arrays", () => {
+  expect([] == []).toBe(false);
+  expect(Mint.compare([], [])).toBe(true);
+});
+
 test("comparing different length arrays", () => {
   expect(["A"] == ["A"]).toBe(false);
   expect(Mint.compare(["A", "B"], ["A"])).toBe(false);

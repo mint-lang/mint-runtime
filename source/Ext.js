@@ -26,6 +26,10 @@ Array.prototype[Equals] = function(other) {
     return false;
   }
 
+  if (this.length == 0) {
+    return true
+  }
+
   return !!this.filter((item, index) => {
     return compare(item, other[index]);
   }).length;
