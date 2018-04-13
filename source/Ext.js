@@ -27,10 +27,25 @@ Array.prototype[Equals] = function(other) {
   }
 
   if (this.length == 0) {
-    return true
+    return true;
   }
 
   return !!this.filter((item, index) => {
     return compare(item, other[index]);
   }).length;
+};
+
+FormData.prototype[Equals] = function(other) {
+  const aKeys = Array.from(this.keys());
+  const bKeys = Array.from(other.keys());
+
+  if (compare(aKeys, bKeys)) {
+    return !!aKeys.filter(item => {
+      const aValue = Array.from(this.getAll(item).sort());
+      const bValue = Array.from(other.getAll(item).sort());
+      return compare(aValue, bValue);
+    }).length;
+  } else {
+    return false;
+  }
 };

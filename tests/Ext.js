@@ -43,3 +43,51 @@ test("comparing same numbers", () => {
 test("comparing booleans", () => {
   expect(Mint.compare(true, true)).toBe(true);
 });
+
+describe("FormData", () => {
+  test("empty form datas are equal", () => {
+    Mint.compare(new FormData(), new FormData());
+  });
+
+  test("same data form datas are equal", () => {
+    const a = new FormData();
+    a.append("a", "a");
+
+    const b = new FormData();
+    b.append("a", "a");
+
+    expect(Mint.compare(a, b)).toBe(true);
+  });
+
+  test("different datas are not equal", () => {
+    const a = new FormData();
+    a.append("a", "a");
+
+    const b = new FormData();
+    b.append("b", "a");
+
+    expect(Mint.compare(a, b)).toBe(false);
+  });
+
+  test("different datas are not equal", () => {
+    const a = new FormData();
+    a.append("a", "b");
+
+    const b = new FormData();
+    b.append("a", "a");
+
+    expect(Mint.compare(a, b)).toBe(false);
+  });
+
+  test("same multiple data form datas are equal", () => {
+    const a = new FormData();
+    a.append("a", "a");
+    a.append("a", "b");
+
+    const b = new FormData();
+    b.append("a", "b");
+    b.append("a", "a");
+
+    expect(Mint.compare(a, b)).toBe(true);
+  });
+});
