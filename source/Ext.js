@@ -40,6 +40,10 @@ FormData.prototype[Equals] = function(other) {
   const bKeys = Array.from(other.keys());
 
   if (compare(aKeys, bKeys)) {
+    if (aKeys.length == 0) {
+      return true;
+    }
+
     return !!aKeys.filter(item => {
       const aValue = Array.from(this.getAll(item).sort());
       const bValue = Array.from(other.getAll(item).sort());

@@ -46,7 +46,7 @@ test("comparing booleans", () => {
 
 describe("FormData", () => {
   test("empty form datas are equal", () => {
-    Mint.compare(new FormData(), new FormData());
+    expect(Mint.compare(new FormData(), new FormData())).toBe(true);
   });
 
   test("same data form datas are equal", () => {
