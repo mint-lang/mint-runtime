@@ -8,8 +8,8 @@ describe("no steps", () => {
     const result = await context.run();
 
     expect(result).toBe("A");
-  })
-})
+  });
+});
 
 describe("teardown", () => {
   test("it is called after success", async () => {
