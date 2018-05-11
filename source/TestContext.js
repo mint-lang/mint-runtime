@@ -21,10 +21,12 @@ export default class TestContext {
     requestAnimationFrame(async () => {
       let step = this.steps.shift();
 
-      try {
-        this.subject = await step(this.subject);
-      } catch (error) {
-        return reject(error.toString());
+      if (step) {
+        try {
+          this.subject = await step(this.subject);
+        } catch (error) {
+          return reject(error);
+        }
       }
 
       if (this.steps.length) {

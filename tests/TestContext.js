@@ -2,6 +2,15 @@ import Main from "../source/Main.js";
 
 const { TestContext } = Main;
 
+describe("no steps", () => {
+  test("returns subject", async () => {
+    const context = new TestContext("A");
+    const result = await context.run();
+
+    expect(result).toBe("A");
+  });
+});
+
 describe("teardown", () => {
   test("it is called after success", async () => {
     const teardown = jest.fn();
