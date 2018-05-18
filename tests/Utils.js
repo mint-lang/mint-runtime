@@ -52,6 +52,12 @@ describe("navigate", () => {
     expect(window.location.pathname).toBe("/test");
     expect(window.dispatchEvent.mock.calls.length).toBe(0);
   });
+
+  test("navigates to the new URL does not dispatch", () => {
+    navigate("/testbaha", false);
+    expect(window.location.pathname).toBe("/testbaha");
+    expect(window.dispatchEvent.mock.calls.length).toBe(0);
+  });
 });
 
 describe("insertStyles", () => {

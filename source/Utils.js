@@ -5,10 +5,14 @@ export const update = (data, new_data) => {
   return new Record(Object.assign(Object.create(null), data, new_data));
 };
 
-export const navigate = url => {
+export const navigate = (url, dispatch = true) => {
   if (window.location.pathname !== url) {
     window.history.pushState({}, "", url);
-    dispatchEvent(new PopStateEvent("popstate"));
+
+    if (dispatch) {
+      dispatchEvent(new PopStateEvent("popstate"));
+    } else {
+    }
   }
 };
 
