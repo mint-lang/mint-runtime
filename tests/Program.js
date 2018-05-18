@@ -7,9 +7,27 @@ class $Main extends React.Component {
   }
 }
 
+class $Link extends React.Component {
+  render() {
+    return React.createElement(
+      "div",
+      {},
+      React.createElement("a", { href: "/user/5" }),
+      React.createElement("a", { href: "/blah" }),
+      React.createElement("a", { href: "https://www.google.com/" })
+    );
+  }
+}
+
 const { program, navigate } = Main;
 
 const route = {
+  path: "/user/:id",
+  handler: jest.fn(),
+  mapping: ["id"]
+};
+
+const linkRoute = {
   path: "/user/:id",
   handler: jest.fn(),
   mapping: ["id"]
@@ -20,6 +38,39 @@ const indexRoute = {
   handler: jest.fn(),
   mapping: []
 };
+
+describe("handling links", () => {
+  test("it does not navigate to local link that does not have a route", () => {
+    let event = new window.Event("click", { bubbles: true });
+
+    program.routes = [linkRoute];
+    program.render($Link);
+    program.root.querySelector("a:nth-child(2)").dispatchEvent(event);
+
+    expect(linkRoute.handler.mock.calls.length).toBe(0);
+  });
+
+  test("it does not navigate to different origin", () => {
+    let event = new window.Event("click", { bubbles: true });
+
+    program.routes = [linkRoute];
+    program.render($Link);
+    program.root.querySelector("a:nth-child(3)").dispatchEvent(event);
+
+    expect(linkRoute.handler.mock.calls.length).toBe(0);
+  });
+
+  test("it navigates to local link", () => {
+    let event = new window.Event("click", { bubbles: true });
+
+    program.routes = [linkRoute];
+    program.render($Link);
+    program.root.querySelector("a").dispatchEvent(event);
+
+    expect(linkRoute.handler.mock.calls.length).toBe(1);
+    expect(linkRoute.handler.mock.calls[0][0]).toBe("5");
+  });
+});
 
 describe("handling navigation", () => {
   test("handles popstate event", () => {

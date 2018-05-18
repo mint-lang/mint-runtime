@@ -1,12 +1,38 @@
+import PropagationPath from "event-propagation-path";
 import RouteParser from "route-parser";
 import ReactDOM from "react-dom";
 import React from "react";
+
+import { navigate } from "./Utils";
 
 export default class Program {
   constructor() {
     this.root = document.createElement("div");
     document.body.appendChild(this.root);
     this.routes = [];
+
+    // Handle links
+    this.root.addEventListener("click", event => {
+      for (let element of event.propagationPath()) {
+        if (element.tagName === "A") {
+          let origin = element.origin;
+          let pathname = element.pathname;
+
+          if (origin === window.location.origin) {
+            for (let item of this.routes) {
+              let path = new RouteParser(item.path);
+              let match = path.match(pathname);
+
+              if (match) {
+                event.preventDefault();
+                navigate(element.href);
+                return;
+              }
+            }
+          }
+        }
+      }
+    });
 
     window.addEventListener("popstate", () => {
       this.handlePopState();
