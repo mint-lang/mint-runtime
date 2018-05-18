@@ -16,12 +16,13 @@ export default class Program {
       for (let element of event.propagationPath()) {
         if (element.tagName === "A") {
           let origin = element.origin;
+          let search = element.search;
           let pathname = element.pathname;
 
           if (origin === window.location.origin) {
             for (let item of this.routes) {
               let path = new RouteParser(item.path);
-              let match = path.match(pathname);
+              let match = path.match(pathname + search);
 
               if (match) {
                 event.preventDefault();
