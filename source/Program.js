@@ -1,9 +1,9 @@
-import PropagationPath from "event-propagation-path";
 import RouteParser from "route-parser";
 import ReactDOM from "react-dom";
 import React from "react";
 
 import { navigate } from "./Utils";
+import "event-propagation-path";
 
 export default class Program {
   constructor() {
