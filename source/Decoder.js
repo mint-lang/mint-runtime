@@ -1,6 +1,18 @@
 import { Nothing, Just } from "./Maybe";
 import { Err, Ok } from "./Result";
 
+export const $Object_Error_NotAString = Symbol("$Object_Error_NotAString");
+export const $Object_Error_NotANumber = Symbol("$Object_Error_NotANumber");
+export const $Object_Error_NotAnObject = Symbol("$Object_Error_NotAnObject");
+export const $Object_Error_NotAnArray = Symbol("$Object_Error_NotAnArray");
+export const $Object_Error_NotABoolean = Symbol("Object_Error_NotABoolean");
+export const $Object_Error_NotAValidTime = Symbol(
+  "$Object_Error_NotAValidTime"
+);
+export const $Object_Error_MissingObjectKey = Symbol(
+  "$Object_Error_MissingObjectKey"
+);
+
 const field = (key, decoder) => {
   return input => {
     if (
@@ -9,11 +21,11 @@ const field = (key, decoder) => {
       typeof input !== "object" ||
       Array.isArray(input)
     ) {
-      return new Err("NOT_AN_OBJECT");
+      return new Err($Object_Error_NotAnObject);
     } else {
       const actual = input[key];
       if (typeof actual === "undefined") {
-        return new Err("MISSING_OBJECT_KEY");
+        return new Err($Object_Error_MissingObjectKey);
       }
       return decoder(actual);
     }
@@ -22,7 +34,7 @@ const field = (key, decoder) => {
 
 const string = input => {
   if (typeof input != "string") {
-    return new Err("NOT_A_STRING");
+    return new Err($Object_Error_NotAString);
   } else {
     return new Ok(input);
   }
@@ -32,29 +44,25 @@ const time = input => {
   const parsed = Date.parse(input);
 
   if (Number.isNaN(parsed)) {
-    return new Err("NOT_A_TIME");
+    return new Err($Object_Error_NotAValidTime);
   } else {
     return new Ok(new Date(parsed));
   }
 };
 
 const number = input => {
-  if (typeof input != "number") {
-    let value = parseFloat(input);
+  let value = parseFloat(input);
 
-    if (isNaN(value)) {
-      return new Err("NOT_A_NUMBER");
-    } else {
-      return new Ok(value);
-    }
+  if (isNaN(value)) {
+    return new Err($Object_Error_NotANumber);
   } else {
-    return new Ok(input);
+    return new Ok(value);
   }
 };
 
 const boolean = input => {
   if (typeof input != "boolean") {
-    return new Err("NOT_A_BOOLEAN");
+    return new Err($Object_Error_NotABoolean);
   } else {
     return new Ok(input);
   }
@@ -63,7 +71,7 @@ const boolean = input => {
 const array = decoder => {
   return input => {
     if (!Array.isArray(input)) {
-      return new Err("NOT_AN_ARRAY");
+      return new Err($Object_Error_NotAnArray);
     }
 
     let results = [];
@@ -85,14 +93,14 @@ const array = decoder => {
 const maybe = decoder => {
   return input => {
     if (input == null || input == undefined) {
-      return new Nothing();
+      return new Ok(new Nothing());
     } else {
       const result = decoder(input);
 
       if (result instanceof Err) {
         return result;
       } else {
-        return new Just(result.value);
+        return new Ok(new Just(result.value));
       }
     }
   };
@@ -105,5 +113,5 @@ export default {
   field: field,
   array: array,
   maybe: maybe,
-  time: time,
+  time: time
 };
