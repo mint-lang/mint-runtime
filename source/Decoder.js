@@ -1,16 +1,16 @@
 import { Nothing, Just } from "./Maybe";
 import { Err, Ok } from "./Result";
 
-export const $Object_Error_NotAString = Symbol("$Object_Error_NotAString");
-export const $Object_Error_NotANumber = Symbol("$Object_Error_NotANumber");
-export const $Object_Error_NotAnObject = Symbol("$Object_Error_NotAnObject");
-export const $Object_Error_NotAnArray = Symbol("$Object_Error_NotAnArray");
-export const $Object_Error_NotABoolean = Symbol("Object_Error_NotABoolean");
-export const $Object_Error_NotAValidTime = Symbol(
-  "$Object_Error_NotAValidTime"
+export const $Object_Error_NotAString = Symbol.for("Object_Error_NotAString");
+export const $Object_Error_NotANumber = Symbol.for("Object_Error_NotANumber");
+export const $Object_Error_NotAnObject = Symbol.for("Object_Error_NotAnObject");
+export const $Object_Error_NotAnArray = Symbol.for("Object_Error_NotAnArray");
+export const $Object_Error_NotABoolean = Symbol.for("Object_Error_NotABoolean");
+export const $Object_Error_NotAValidTime = Symbol.for(
+  "Object_Error_NotAValidTime"
 );
-export const $Object_Error_MissingObjectKey = Symbol(
-  "$Object_Error_MissingObjectKey"
+export const $Object_Error_MissingObjectKey = Symbol.for(
+  "Object_Error_MissingObjectKey"
 );
 
 const field = (key, decoder) => {
