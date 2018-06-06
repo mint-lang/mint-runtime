@@ -1,12 +1,4 @@
-import {
-  $Object_Error_MissingObjectKey,
-  $Object_Error_NotAValidTime,
-  $Object_Error_NotABoolean,
-  $Object_Error_NotAnObject,
-  $Object_Error_NotAnArray,
-  $Object_Error_NotAString,
-  $Object_Error_NotANumber
-} from "../source/Decoder.js";
+import { Error } from "../source/Decoder.js";
 import Mint from "../source/Main.js";
 
 const { Decoder, Err, Ok, Just, Nothing } = Mint;
@@ -16,14 +8,27 @@ describe("field", () => {
     const result = Decoder.field("", Decoder.string)([]);
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBe($Object_Error_NotAnObject);
+    expect(result.value).toBeInstanceOf(Error);
+    expect(typeof result.value.toString()).toBe("string");
   });
 
   test("Missing key", () => {
     const result = Decoder.field("", Decoder.string)({});
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBe($Object_Error_MissingObjectKey);
+    expect(result.value).toBeInstanceOf(Error);
+    expect(typeof result.value.toString()).toBe("string");
+  });
+
+  test("Propagated error", () => {
+    const input = { blah: 0 };
+    const result = Decoder.field("blah", Decoder.string)(input);
+
+    expect(result).toBeInstanceOf(Err);
+    expect(result.value).toBeInstanceOf(Error);
+    expect(typeof result.value.toString()).toBe("string");
+    expect(result.value.object).toBe(input);
+    expect(result.value.path.length).toBe(1);
   });
 
   test("ok", () => {
@@ -39,7 +44,8 @@ describe("string", () => {
     const result = Decoder.string(0);
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBe($Object_Error_NotAString);
+    expect(result.value).toBeInstanceOf(Error);
+    expect(typeof result.value.toString()).toBe("string");
   });
 
   test("ok", () => {
@@ -55,7 +61,8 @@ describe("number", () => {
     const result = Decoder.number("asd");
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBe($Object_Error_NotANumber);
+    expect(result.value).toBeInstanceOf(Error);
+    expect(typeof result.value.toString()).toBe("string");
   });
 
   test("ok", () => {
@@ -71,7 +78,8 @@ describe("time", () => {
     const result = Decoder.time("asd");
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBe($Object_Error_NotAValidTime);
+    expect(result.value).toBeInstanceOf(Error);
+    expect(typeof result.value.toString()).toBe("string");
   });
 
   test("ok", () => {
@@ -87,7 +95,8 @@ describe("boolean", () => {
     const result = Decoder.boolean("asd");
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBe($Object_Error_NotABoolean);
+    expect(result.value).toBeInstanceOf(Error);
+    expect(typeof result.value.toString()).toBe("string");
   });
 
   test("ok", () => {
@@ -103,14 +112,19 @@ describe("array", () => {
     const result = Decoder.array(Decoder.string)("asd");
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBe($Object_Error_NotAnArray);
+    expect(result.value).toBeInstanceOf(Error);
+    expect(typeof result.value.toString()).toBe("string");
   });
 
   test("item error", () => {
-    const result = Decoder.array(Decoder.string)([0]);
+    const input = [0];
+    const result = Decoder.array(Decoder.string)(input);
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBe($Object_Error_NotAString);
+    expect(result.value).toBeInstanceOf(Error);
+    expect(typeof result.value.toString()).toBe("string");
+    expect(result.value.object).toBe(input);
+    expect(result.value.path.length).toBe(1);
   });
 
   test("ok", () => {
@@ -126,7 +140,8 @@ describe("maybe", () => {
     const result = Decoder.maybe(Decoder.string)(0);
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBe($Object_Error_NotAString);
+    expect(result.value).toBeInstanceOf(Error);
+    expect(typeof result.value.toString()).toBe("string");
   });
 
   test("undefined", () => {
@@ -149,5 +164,41 @@ describe("maybe", () => {
     expect(result).toBeInstanceOf(Ok);
     expect(result.value).toBeInstanceOf(Just);
     expect(result.value.value).toBe("asd");
+  });
+});
+
+describe("complex error", () => {
+  test("returns nice message", () => {
+    const input = {
+      level1: [
+        {
+          sub: {
+            sub2: {
+              sub3: [1]
+            }
+          }
+        }
+      ]
+    };
+
+    const decoder = Decoder.field(
+      "level1",
+      Decoder.array(
+        Decoder.field(
+          "sub",
+          Decoder.field(
+            "sub2",
+            Decoder.field("sub3", Decoder.array(Decoder.string))
+          )
+        )
+      )
+    );
+
+    const result = decoder(input);
+
+    expect(result.value).toBeInstanceOf(Error);
+    expect(typeof result.value.toString()).toBe("string");
+    expect(result.value.object).toBe(input);
+    expect(result.value.path.length).toBe(6);
   });
 });
