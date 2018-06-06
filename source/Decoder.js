@@ -3,10 +3,10 @@ import { Nothing, Just } from "./Maybe";
 import { Err, Ok } from "./Result";
 
 const format = value => {
-  let string = JSON.stringify(value, "", 2)
+  let string = JSON.stringify(value, "", 2);
 
   if (typeof string === "undefined") {
-    string = "undefined"
+    string = "undefined";
   }
 
   return indentString(string);
