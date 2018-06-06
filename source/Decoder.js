@@ -3,7 +3,13 @@ import { Nothing, Just } from "./Maybe";
 import { Err, Ok } from "./Result";
 
 const format = value => {
-  return indentString(JSON.stringify(value, "", 2));
+  let string = JSON.stringify(value, "", 2)
+
+  if (typeof string === "undefined") {
+    string = "undefined"
+  }
+
+  return indentString(string);
 };
 
 export class Error {
