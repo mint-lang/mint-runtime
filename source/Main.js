@@ -11,6 +11,7 @@ import { Ok, Err } from "./Result";
 import TestContext from "./TestContext";
 import Provider from "./Provider";
 import Program from "./Program";
+import Decoder from "./Decoder";
 import Record from "./Record";
 import Store from "./Store";
 
@@ -38,6 +39,7 @@ export default {
   Err: Err,
   Ok: Ok,
 
+  Decoder: Decoder,
   DateFNS: DateFNS,
   Record: Record,
 
