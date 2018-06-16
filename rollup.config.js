@@ -16,6 +16,8 @@ export default {
     replace({
       "process.env.NODE_ENV": JSON.stringify("production")
     }),
-    uglify()
+    uglify({
+      mangle: { reserved: ["Err", "Ok", "Maybe", "Just", "Nothing", "Record"] }
+    })
   ]
 };

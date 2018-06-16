@@ -1,7 +1,13 @@
-import { Error } from "../source/Decoder.js";
+import { Error, format } from "../source/Decoder.js";
 import Mint from "../source/Main.js";
 
 const { Decoder, Err, Ok, Just, Nothing } = Mint;
+
+describe("format", () => {
+  test("it returns undefined for undefined", () => {
+    expect(format(undefined)).toEqual(" undefined");
+  });
+});
 
 describe("field", () => {
   test("Not an Object", () => {

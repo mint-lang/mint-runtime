@@ -1,5 +1,5 @@
+import { Equals, Name } from "./Symbols";
 import { compare } from "./Compare";
-import { Equals } from "./Symbols";
 
 class Result {
   constructor(value) {
@@ -12,6 +12,10 @@ class Result {
     } else {
       return false;
     }
+  }
+
+  get [Name]() {
+    return "Result";
   }
 }
 

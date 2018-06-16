@@ -1,8 +1,9 @@
-import { Equals } from "./Symbols";
+import { Equals, Name } from "./Symbols";
 import Record from "./Record";
 
 export const update = (data, new_data) => {
-  return new Record(Object.assign(Object.create(null), data, new_data));
+  const fields = Object.assign(Object.create(null), data, new_data);
+  return new Record(fields, data[Name]);
 };
 
 export const navigate = (url, dispatch = true) => {

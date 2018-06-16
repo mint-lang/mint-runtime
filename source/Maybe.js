@@ -1,7 +1,11 @@
+import { Equals, Name } from "./Symbols";
 import { compare } from "./Compare";
-import { Equals } from "./Symbols";
 
-class Maybe {}
+class Maybe {
+  get [Name]() {
+    return "Maybe";
+  }
+}
 
 export class Nothing extends Maybe {
   [Equals](other) {

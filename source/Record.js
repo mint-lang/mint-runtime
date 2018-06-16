@@ -1,11 +1,15 @@
+import { Equals, Name } from "./Symbols";
 import { compare } from "./Compare";
-import { Equals } from "./Symbols";
 
 export default class Record {
-  constructor(data) {
+  constructor(data, name) {
     for (let key in data) {
       this[key] = data[key];
     }
+
+    Object.defineProperty(this, Name, {
+      value: name
+    });
   }
 
   [Equals](other) {

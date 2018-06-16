@@ -3,8 +3,8 @@
   "scripts": {
     "build": "rollup -c",
     "test": "jest",
-    "lint": "prettier --list-different source/** tests/**",
-    "format": "prettier --write source/** tests/**"
+    "lint": "prettier --list-different source/** tests/** rollup.config.js",
+    "format": "prettier --write source/** tests/** rollup.config.js"
   },
   "dependencies": {
     "babel-core": "6.26.0",

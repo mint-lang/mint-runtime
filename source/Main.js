@@ -7,6 +7,7 @@ import { Nothing, Just } from "./Maybe";
 import { compare } from "./Compare";
 import { Equals } from "./Symbols";
 import { Ok, Err } from "./Result";
+import { match } from "./Match";
 
 import TestContext from "./TestContext";
 import Provider from "./Provider";
@@ -25,6 +26,7 @@ export default {
   navigate: navigate,
   compare: compare,
   update: update,
+  match: match,
 
   Component: React.PureComponent,
   ReactDOM: ReactDOM,
