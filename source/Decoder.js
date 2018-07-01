@@ -2,7 +2,7 @@ import indentString from "indent-string";
 import { Nothing, Just } from "./Maybe";
 import { Err, Ok } from "./Result";
 
-const format = value => {
+export const format = value => {
   let string = JSON.stringify(value, "", 2);
 
   if (typeof string === "undefined") {

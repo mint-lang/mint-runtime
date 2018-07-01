@@ -12,6 +12,7 @@ import TestContext from "./TestContext";
 import Provider from "./Provider";
 import Program from "./Program";
 import Decoder from "./Decoder";
+import encode from "./Encoder";
 import Record from "./Record";
 import Store from "./Store";
 
@@ -25,6 +26,7 @@ export default {
   navigate: navigate,
   compare: compare,
   update: update,
+  encode: encode,
 
   Component: React.PureComponent,
   ReactDOM: ReactDOM,
