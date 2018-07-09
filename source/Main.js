@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import DateFNS from "date-fns";
 import React from "react";
 
-import { insertStyles, update, navigate, normalizeEvent } from "./Utils";
+import { insertStyles, update, navigate, normalizeEvent, at } from "./Utils";
 import { Nothing, Just } from "./Maybe";
 import { compare } from "./Compare";
 import { Equals } from "./Symbols";
@@ -27,6 +27,7 @@ export default {
   compare: compare,
   update: update,
   encode: encode,
+  at: at,
 
   Component: React.PureComponent,
   ReactDOM: ReactDOM,

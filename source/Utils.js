@@ -1,3 +1,4 @@
+import { Nothing, Just } from "./Maybe";
 import { Equals } from "./Symbols";
 import Record from "./Record";
 
@@ -20,6 +21,14 @@ export const insertStyles = styles => {
   let style = document.createElement("style");
   document.head.appendChild(style);
   style.innerHTML = styles;
+};
+
+export const at = (array, index) => {
+  if (array.length >= index + 1) {
+    return new Just(array[index]);
+  } else {
+    return new Nothing();
+  }
 };
 
 export const normalizeEvent = event => {

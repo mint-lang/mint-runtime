@@ -6,7 +6,10 @@ const {
   Record,
   navigate,
   insertStyles,
-  normalizeEvent
+  normalizeEvent,
+  Just,
+  Nothing,
+  at
 } = Main;
 
 console.warn = jest.fn();
@@ -67,8 +70,23 @@ describe("insertStyles", () => {
   });
 });
 
+describe("at", () => {
+  test("it returns a just for an element", () => {
+    let result = at([0], 0);
+
+    expect(result).toBeInstanceOf(Just);
+    expect(result.value).toBe(0);
+  });
+
+  test("it returns nothing for an element", () => {
+    let result = at([0], 1);
+
+    expect(result).toBeInstanceOf(Nothing);
+  });
+});
+
 describe("normalizeEvent", () => {
-  test("retuns default values if they are not defined", () => {
+  test("returns default values if they are not defined", () => {
     const event = normalizeEvent({ test: "X" });
 
     expect(() => event.clipboardData.constructor).toThrow();
