@@ -31,6 +31,7 @@ export default {
 
   Component: React.PureComponent,
   ReactDOM: ReactDOM,
+  React: React,
 
   TestContext: TestContext,
   Provider: Provider,

@@ -21,7 +21,10 @@ const encode = item => {
           let result = {};
 
           for (let key in item) {
-            result[key] = encode(item[key]);
+            const actualKey =
+              (item.constructor.mappings && item.constructor.mappings[key]) ||
+              key;
+            result[actualKey] = encode(item[key]);
           }
 
           return result;

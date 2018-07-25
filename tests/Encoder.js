@@ -2,6 +2,9 @@ import Mint from "../source/Main.js";
 
 const { encode, Just, Nothing, Record } = Mint;
 
+class X extends Record {}
+X.mappings = { a: "x-y-z" };
+
 describe("encode", () => {
   test("string", () => {
     const result = encode("");
@@ -40,9 +43,10 @@ describe("encode", () => {
   });
 
   test("record", () => {
-    const result = encode(new Record({ a: "B", c: 0 }));
-    expect(result).not.toBeInstanceOf(Record);
-    expect(result.a).toBe("B");
+    const result = encode(new X({ a: "B", c: 0 }));
+    expect(result).not.toBeInstanceOf(X);
+    expect(result.a).toBe(undefined);
+    expect(result["x-y-z"]).toBe("B");
     expect(result.c).toBe(0);
   });
 
