@@ -4,12 +4,12 @@ const { Store } = Main;
 
 class TestStore extends Store {
   constructor() {
-    super()
-    this.state = { name: "Joe" }
+    super();
+    this.state = { name: "Joe" };
   }
 
   get name() {
-    return this.state.name
+    return this.state.name;
   }
 }
 
