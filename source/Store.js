@@ -1,11 +1,11 @@
 export default class Store {
   constructor() {
     this.listeners = new Set();
-    this.props = {};
+    this.state = {};
   }
 
-  setState(props, callback) {
-    this.props = Object.assign({}, this.state, props);
+  setState(state, callback) {
+    this.state = Object.assign({}, this.state, state);
 
     for (let listener of this.listeners) {
       listener.forceUpdate();

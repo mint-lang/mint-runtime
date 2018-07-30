@@ -3,18 +3,13 @@ import Main from "../source/Main.js";
 const { Store } = Main;
 
 class TestStore extends Store {
-  get name() {
-    if (this.props.name != undefined) {
-      return this.props.name;
-    } else {
-      return `Joe`;
-    }
+  constructor() {
+    super()
+    this.state = { name: "Joe" }
   }
 
-  get state() {
-    return {
-      name: this.name
-    };
+  get name() {
+    return this.state.name
   }
 }
 
