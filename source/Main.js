@@ -15,6 +15,7 @@ import Decoder from "./Decoder";
 import encode from "./Encoder";
 import Record from "./Record";
 import Store from "./Store";
+import Enum from "./Enum";
 
 import "./Ext";
 
@@ -46,6 +47,7 @@ export default {
   Decoder: Decoder,
   DateFNS: DateFNS,
   Record: Record,
+  Enum: Enum,
 
   createPortal: ReactDOM.createPortal,
   createElement: React.createElement,
