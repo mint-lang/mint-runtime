@@ -122,6 +122,14 @@ I was trying to decode the field "{field}" from the object:
 but I could not because it's not an object.
 `;
 
+const NOT_A_MAP = `
+I was trying to decode the value:
+
+{value}
+
+as a Map, but could not.
+`;
+
 const string = input => {
   if (typeof input != "string") {
     return new Err(new Error(NOT_A_STRING.replace("{value}", format(input))));
@@ -239,6 +247,35 @@ const maybe = decoder => {
   };
 };
 
+const map = decoder => {
+  return input => {
+    if (
+      input == null ||
+      input == undefined ||
+      typeof input !== "object" ||
+      Array.isArray(input)
+    ) {
+      const message = NOT_A_MAP.replace("{value}", format(input));
+
+      return new Err(new Error(message));
+    } else {
+      const map = new Map();
+
+      for (let key in input) {
+        const result = decoder(input[key]);
+
+        if (result instanceof Err) {
+          return result;
+        } else {
+          map.set(key, result.value);
+        }
+      }
+
+      return new Ok(map);
+    }
+  };
+};
+
 export default {
   boolean: boolean,
   number: number,
@@ -246,5 +283,6 @@ export default {
   field: field,
   array: array,
   maybe: maybe,
-  time: time
+  time: time,
+  map: map
 };

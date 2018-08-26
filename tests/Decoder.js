@@ -173,6 +173,41 @@ describe("maybe", () => {
   });
 });
 
+describe("map", () => {
+  test("error", () => {
+    const result = Decoder.map(Decoder.string)(0);
+
+    expect(result).toBeInstanceOf(Err);
+    expect(result.value).toBeInstanceOf(Error);
+    expect(typeof result.value.toString()).toBe("string");
+  });
+
+  test("array", () => {
+    const result = Decoder.map(Decoder.string)([]);
+
+    expect(result).toBeInstanceOf(Err);
+    expect(result.value).toBeInstanceOf(Error);
+    expect(typeof result.value.toString()).toBe("string");
+  });
+
+  test("invalid value", () => {
+    const map = { a: 0 };
+    const result = Decoder.map(Decoder.string)(map);
+
+    expect(result).toBeInstanceOf(Err);
+    expect(result.value).toBeInstanceOf(Error);
+    expect(typeof result.value.toString()).toBe("string");
+  });
+
+  test("ok", () => {
+    const map = { a: "1" };
+    const result = Decoder.map(Decoder.string)(map);
+
+    expect(result).toBeInstanceOf(Ok);
+    expect(result.value).toBeInstanceOf(Map);
+  });
+});
+
 describe("complex error", () => {
   test("returns nice message", () => {
     const input = {

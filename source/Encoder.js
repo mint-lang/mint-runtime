@@ -17,6 +17,14 @@ const encode = item => {
           return item.value;
         } else if (item instanceof Nothing) {
           return null;
+        } else if (item instanceof Map) {
+          let result = {};
+
+          item.forEach((value, key) => {
+            result[key] = encode(value);
+          });
+
+          return result;
         } else if (item instanceof Record) {
           let result = {};
 

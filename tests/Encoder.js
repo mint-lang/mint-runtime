@@ -44,10 +44,18 @@ describe("encode", () => {
 
   test("record", () => {
     const result = encode(new X({ a: "B", c: 0 }));
+
     expect(result).not.toBeInstanceOf(X);
     expect(result.a).toBe(undefined);
     expect(result["x-y-z"]).toBe("B");
     expect(result.c).toBe(0);
+  });
+
+  test("map", () => {
+    const result = encode(new Map([["a", "B"], ["c", "0"]]));
+    expect(result).not.toBeInstanceOf(Map);
+    expect(result.a).toBe("B");
+    expect(result.c).toBe("0");
   });
 
   test("anything else", () => {
