@@ -26,7 +26,7 @@ export default class Program {
 
               if (match) {
                 event.preventDefault();
-                navigate(element.href);
+                navigate(element.pathname);
                 return;
               }
             }
