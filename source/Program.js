@@ -15,18 +15,20 @@ export default class Program {
     this.root.addEventListener("click", event => {
       for (let element of event.propagationPath()) {
         if (element.tagName === "A") {
+          let pathname = element.pathname;
           let origin = element.origin;
           let search = element.search;
-          let pathname = element.pathname;
+          let hash = element.hash;
 
           if (origin === window.location.origin) {
             for (let item of this.routes) {
+              let fullPath = pathname + search + hash;
               let path = new RouteParser(item.path);
-              let match = path.match(pathname + search);
+              let match = path.match(fullPath);
 
               if (match) {
                 event.preventDefault();
-                navigate(element.pathname);
+                navigate(fullPath);
                 return;
               }
             }
