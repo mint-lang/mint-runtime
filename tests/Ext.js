@@ -44,6 +44,75 @@ test("comparing booleans", () => {
   expect(Mint.compare(true, true)).toBe(true);
 });
 
+describe("URLSearchParams", () => {
+  test("same data are equal", () => {
+    const a = new URLSearchParams("a=b&c=d");
+    const b = new URLSearchParams("a=b&c=d");
+
+    expect(Mint.compare(a, b)).toBe(true);
+  });
+});
+
+describe("Map", () => {
+  test("same data are equal", () => {
+    const a = new Map([["A", "B"], ["X", "Y"]]);
+    const b = new Map([["A", "B"], ["X", "Y"]]);
+
+    expect(Mint.compare(a, b)).toBe(true);
+  });
+
+  test("same data with different order are equal", () => {
+    const a = new Map([["X", "Y"], ["A", "B"]]);
+    const b = new Map([["A", "B"], ["X", "Y"]]);
+
+    expect(Mint.compare(a, b)).toBe(true);
+  });
+
+  test("empty maps are equal", () => {
+    const a = new Map();
+    const b = new Map();
+
+    expect(Mint.compare(a, b)).toBe(true);
+  });
+
+  test("different data are not equal", () => {
+    const a = new Map([["A", "B"], ["X", "Z"]]);
+    const b = new Map([["A", "B"], ["X", "Y"]]);
+
+    expect(Mint.compare(a, b)).toBe(false);
+  });
+
+  test("data with different number of keys are not equal", () => {
+    const a = new Map([["A", "B"]]);
+    const b = new Map([["A", "B"], ["X", "Y"]]);
+
+    expect(Mint.compare(a, b)).toBe(false);
+  });
+});
+
+describe("Set", () => {
+  test("same data are equal", () => {
+    const a = new Set(["A", "B", "B"]);
+    const b = new Set(["A", "B", "B"]);
+
+    expect(Mint.compare(a, b)).toBe(true);
+  });
+
+  test("same data not in order are equal", () => {
+    const a = new Set(["B", "A", "A"]);
+    const b = new Set(["A", "B", "B"]);
+
+    expect(Mint.compare(a, b)).toBe(true);
+  });
+
+  test("different data does not equal", () => {
+    const a = new Set(["B", "C", "A"]);
+    const b = new Set(["A", "B", "B"]);
+
+    expect(Mint.compare(a, b)).toBe(false);
+  });
+});
+
 describe("FormData", () => {
   test("empty form datas are equal", () => {
     expect(Mint.compare(new FormData(), new FormData())).toBe(true);
@@ -87,6 +156,18 @@ describe("FormData", () => {
     const b = new FormData();
     b.append("a", "b");
     b.append("a", "a");
+
+    expect(Mint.compare(a, b)).toBe(true);
+  });
+
+  test("same multiple data form datas with different order are equal", () => {
+    const a = new FormData();
+    a.append("a", "b");
+    a.append("x", "y");
+
+    const b = new FormData();
+    b.append("x", "y");
+    b.append("a", "b");
 
     expect(Mint.compare(a, b)).toBe(true);
   });
