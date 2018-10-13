@@ -30,9 +30,13 @@ Array.prototype[Equals] = function(other) {
     return true;
   }
 
-  return !!this.filter((item, index) => {
-    return compare(item, other[index]);
-  }).length;
+  for (let index in this) {
+    if (!compare(this[index], other[index])) {
+      return false
+    }
+  }
+
+  return true
 };
 
 FormData.prototype[Equals] = function(other) {
