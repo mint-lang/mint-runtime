@@ -32,11 +32,11 @@ Array.prototype[Equals] = function(other) {
 
   for (let index in this) {
     if (!compare(this[index], other[index])) {
-      return false
+      return false;
     }
   }
 
-  return true
+  return true;
 };
 
 FormData.prototype[Equals] = function(other) {
