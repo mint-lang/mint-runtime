@@ -49,7 +49,9 @@ export default class Program {
       } else {
         let path = new RouteParser(item.path);
         let match = path.match(
-          window.location.pathname + window.location.search + window.location.hash
+          window.location.pathname +
+            window.location.search +
+            window.location.hash
         );
 
         if (match) {
