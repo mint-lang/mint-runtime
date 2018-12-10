@@ -53,7 +53,7 @@ class Root extends React.Component {
   }
 }
 
-Root.displayName = "Mint.Root"
+Root.displayName = "Mint.Root";
 
 export default class Program {
   constructor() {
