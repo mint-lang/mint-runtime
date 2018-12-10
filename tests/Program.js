@@ -14,7 +14,13 @@ class $Link extends React.Component {
       {},
       React.createElement("a", { href: "/user/5" }),
       React.createElement("a", { href: "/blah" }),
-      React.createElement("a", { href: "https://www.google.com/" })
+      React.createElement("a", { href: "https://www.google.com/" }),
+      React.createElement("a", {
+        href: "/user/5",
+        onClick: event => {
+          event.preventDefault();
+        }
+      })
     );
   }
 }
@@ -56,6 +62,29 @@ describe("handling links", () => {
     program.routes = [linkRoute];
     program.render($Link);
     program.root.querySelector("a:nth-child(3)").dispatchEvent(event);
+
+    expect(linkRoute.handler.mock.calls.length).toBe(0);
+  });
+
+  test("it does not navigate if default is prevented already", () => {
+    let event = new window.Event("click", { bubbles: true });
+
+    program.routes = [linkRoute];
+    program.render($Link);
+    program.root.querySelector("a:nth-child(4)").dispatchEvent(event);
+
+    expect(linkRoute.handler.mock.calls.length).toBe(0);
+  });
+
+  test("it does not if ctrl key is pressed", () => {
+    let event = new window.MouseEvent("click", {
+      bubbles: true,
+      ctrlKey: true
+    });
+
+    program.routes = [linkRoute];
+    program.render($Link);
+    program.root.querySelector("a:nth-child(1)").dispatchEvent(event);
 
     expect(linkRoute.handler.mock.calls.length).toBe(0);
   });
