@@ -1,6 +1,6 @@
 import Main from "../source/Main.js";
 
-const { compare, Record } = Main;
+const { compare, Record, createRecord, Decoder, Ok, Err } = Main;
 
 test("comparing two identical records", () => {
   const a = new Record({ name: "Joe" });
@@ -41,3 +41,45 @@ test("comparing records with something else", () => {
 
   expect(compare(a, "A")).toBe(false);
 });
+
+describe("creating a record", () => {
+  it("decodes successfully", () => {
+    const C = createRecord({
+      a: ["caseInsensitive",Decoder.boolean],
+      b: ["multiline",Decoder.boolean],
+      c: ["unicode",Decoder.boolean],
+      d: ["global",Decoder.boolean],
+      e: ["sticky",Decoder.boolean]
+    })
+
+    const result = C.decode({
+      caseInsensitive: true,
+      multiline: true,
+      unicode: true,
+      global: true,
+      sticky: true
+    })
+
+    expect(result instanceof Ok).toBe(true)
+  })
+
+  it("returns an error if can't decode", () => {
+    const C = createRecord({
+      a: ["caseInsensitive",Decoder.boolean],
+      b: ["multiline",Decoder.boolean],
+      c: ["unicode",Decoder.boolean],
+      d: ["global",Decoder.boolean],
+      e: ["sticky",Decoder.boolean]
+    })
+
+    const result = C.decode({
+      caseInsensitive: "true",
+      multiline: true,
+      unicode: true,
+      global: true,
+      sticky: true
+    })
+
+    expect(result instanceof Err).toBe(true)
+  })
+})

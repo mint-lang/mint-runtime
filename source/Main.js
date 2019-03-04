@@ -8,12 +8,12 @@ import { compare } from "./Compare";
 import { Equals } from "./Symbols";
 import { Ok, Err } from "./Result";
 
+import { Record, create } from "./Record";
 import TestContext from "./TestContext";
 import Provider from "./Provider";
 import Program from "./Program";
 import Decoder from "./Decoder";
 import encode from "./Encoder";
-import Record from "./Record";
 import Store from "./Store";
 import Enum from "./Enum";
 
@@ -51,6 +51,7 @@ export default {
 
   createPortal: ReactDOM.createPortal,
   createElement: React.createElement,
+  createRecord: create,
 
   Symbols: {
     Equals: Equals

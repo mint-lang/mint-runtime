@@ -1,7 +1,9 @@
 import { compare } from "./Compare";
 import { Equals } from "./Symbols";
+import { Err, Ok } from "./Result";
+import Decoder from "./Decoder";
 
-export default class Record {
+export class Record {
   constructor(data) {
     for (let key in data) {
       this[key] = data[key];
@@ -26,3 +28,28 @@ export default class Record {
     return true;
   }
 }
+
+export const create = mappings => {
+  const item = class extends Record {};
+  item.mappings = mappings;
+  item.decode = _input => {
+    const object = {};
+
+    for (let key in mappings) {
+      const [otherKey, decoder] = mappings[key];
+      const result = Decoder.field(otherKey, decoder)(_input);
+
+      if (result instanceof Err) {
+        return result;
+      }
+
+      object[key] = result;
+    }
+
+    return new Ok(new item(object));
+  };
+
+  return item
+};
+
+export default Record
