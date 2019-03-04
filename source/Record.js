@@ -49,7 +49,7 @@ export const create = mappings => {
     return new Ok(new item(object));
   };
 
-  return item
+  return item;
 };
 
-export default Record
+export default Record;

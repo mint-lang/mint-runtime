@@ -45,12 +45,12 @@ test("comparing records with something else", () => {
 describe("creating a record", () => {
   it("decodes successfully", () => {
     const C = createRecord({
-      a: ["caseInsensitive",Decoder.boolean],
-      b: ["multiline",Decoder.boolean],
-      c: ["unicode",Decoder.boolean],
-      d: ["global",Decoder.boolean],
-      e: ["sticky",Decoder.boolean]
-    })
+      a: ["caseInsensitive", Decoder.boolean],
+      b: ["multiline", Decoder.boolean],
+      c: ["unicode", Decoder.boolean],
+      d: ["global", Decoder.boolean],
+      e: ["sticky", Decoder.boolean]
+    });
 
     const result = C.decode({
       caseInsensitive: true,
@@ -58,19 +58,19 @@ describe("creating a record", () => {
       unicode: true,
       global: true,
       sticky: true
-    })
+    });
 
-    expect(result instanceof Ok).toBe(true)
-  })
+    expect(result instanceof Ok).toBe(true);
+  });
 
   it("returns an error if can't decode", () => {
     const C = createRecord({
-      a: ["caseInsensitive",Decoder.boolean],
-      b: ["multiline",Decoder.boolean],
-      c: ["unicode",Decoder.boolean],
-      d: ["global",Decoder.boolean],
-      e: ["sticky",Decoder.boolean]
-    })
+      a: ["caseInsensitive", Decoder.boolean],
+      b: ["multiline", Decoder.boolean],
+      c: ["unicode", Decoder.boolean],
+      d: ["global", Decoder.boolean],
+      e: ["sticky", Decoder.boolean]
+    });
 
     const result = C.decode({
       caseInsensitive: "true",
@@ -78,8 +78,8 @@ describe("creating a record", () => {
       unicode: true,
       global: true,
       sticky: true
-    })
+    });
 
-    expect(result instanceof Err).toBe(true)
-  })
-})
+    expect(result instanceof Err).toBe(true);
+  });
+});
