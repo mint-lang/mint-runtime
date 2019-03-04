@@ -61,6 +61,11 @@ describe("creating a record", () => {
     });
 
     expect(result instanceof Ok).toBe(true);
+    expect(result.value.a).toBe(true);
+    expect(result.value.b).toBe(true);
+    expect(result.value.c).toBe(true);
+    expect(result.value.d).toBe(true);
+    expect(result.value.e).toBe(true);
   });
 
   it("returns an error if can't decode", () => {

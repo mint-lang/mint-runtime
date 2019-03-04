@@ -43,7 +43,7 @@ export const create = mappings => {
         return result;
       }
 
-      object[key] = result;
+      object[key] = result.value;
     }
 
     return new Ok(new item(object));
