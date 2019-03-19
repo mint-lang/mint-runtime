@@ -83,6 +83,12 @@ describe("at", () => {
 
     expect(result).toBeInstanceOf(Nothing);
   });
+
+  test("it returns nothing if index is negative", () => {
+    let result = at([0], -1);
+
+    expect(result).toBeInstanceOf(Nothing);
+  });
 });
 
 describe("normalizeEvent", () => {

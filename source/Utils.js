@@ -24,7 +24,7 @@ export const insertStyles = styles => {
 };
 
 export const at = (array, index) => {
-  if (array.length >= index + 1) {
+  if (array.length >= index + 1 && index >= 0) {
     return new Just(array[index]);
   } else {
     return new Nothing();
