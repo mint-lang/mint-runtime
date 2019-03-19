@@ -3,7 +3,7 @@ import Mint from "../source/Main.js";
 const { encode, Just, Nothing, Record } = Mint;
 
 class X extends Record {}
-X.mappings = { a: ["x-y-z"] };
+X.mappings = { a: "x-y-z" };
 
 describe("encode", () => {
   test("string", () => {
