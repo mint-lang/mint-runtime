@@ -4,13 +4,13 @@ const { Module } = Mint;
 
 class TestModule extends Module {
   boundFn() {
-    return this
+    return this;
   }
 }
 
 describe("Module", () => {
   test("functions are bound", () => {
-    const instance = new TestModule()
+    const instance = new TestModule();
     expect(instance.boundFn()).toEqual(instance);
   });
 });

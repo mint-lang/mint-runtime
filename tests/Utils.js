@@ -80,13 +80,16 @@ describe("array", () => {
   test("doesn't do anything for an array", () => {
     expect(array([0])).toEqual([0]);
   });
-})
+});
 
 describe("style", () => {
   test("it creates an object from objects and maps", () => {
-    expect(style([new Map([["a","b"]]), {c: "d"}])).toEqual({a: "b", c: "d"});
+    expect(style([new Map([["a", "b"]]), { c: "d" }])).toEqual({
+      a: "b",
+      c: "d"
+    });
   });
-})
+});
 
 describe("at", () => {
   test("it returns a just for an element", () => {

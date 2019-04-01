@@ -1,4 +1,4 @@
-import { bindFunctions } from './Utils'
+import { bindFunctions } from "./Utils";
 
 export default class Module {
   constructor() {
