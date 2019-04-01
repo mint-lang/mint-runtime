@@ -124,3 +124,45 @@ export const normalizeEvent = event => {
     }
   });
 };
+
+export const bindFunctions = (target, exclude) => {
+  const descriptors = Object.getOwnPropertyDescriptors(
+    Reflect.getPrototypeOf(target)
+  );
+
+  for (let key in descriptors) {
+    if (exclude && exclude[key]) {
+      continue;
+    }
+    const value = descriptors[key].value;
+    if (typeof value !== "function") {
+      continue;
+    }
+    target[key] = value.bind(target);
+  }
+};
+
+export const array = function() {
+  let items = Array.from(arguments);
+  if (Array.isArray(items[0]) && items.length === 1) {
+    return items[0];
+  } else {
+    return items;
+  }
+};
+
+export const style = function(items) {
+  const result = {};
+  for (let item of items) {
+    if (item instanceof Map) {
+      for (let [key, value] of item) {
+        result[key] = value;
+      }
+    } else {
+      for (let key in item) {
+        result[key] = item[key];
+      }
+    }
+  }
+  return result;
+};

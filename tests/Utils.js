@@ -9,7 +9,9 @@ const {
   normalizeEvent,
   Just,
   Nothing,
-  at
+  at,
+  array,
+  style
 } = Main;
 
 console.warn = jest.fn();
@@ -69,6 +71,22 @@ describe("insertStyles", () => {
     expect(document.head.querySelector("style").textContent).toBe("test");
   });
 });
+
+describe("array", () => {
+  test("it an array for not arrays", () => {
+    expect(array(0)).toEqual([0]);
+  });
+
+  test("doesn't do anything for an array", () => {
+    expect(array([0])).toEqual([0]);
+  });
+})
+
+describe("style", () => {
+  test("it creates an object from objects and maps", () => {
+    expect(style([new Map([["a","b"]]), {c: "d"}])).toEqual({a: "b", c: "d"});
+  });
+})
 
 describe("at", () => {
   test("it returns a just for an element", () => {
