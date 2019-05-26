@@ -84,9 +84,10 @@ describe("array", () => {
 
 describe("style", () => {
   test("it creates an object from objects and maps", () => {
-    expect(style([new Map([["a", "b"]]), { c: "d" }])).toEqual({
+    expect(style(["opacity:0;", new Map([["a", "b"]]), { c: "d" }])).toEqual({
+      opacity: "0",
       a: "b",
-      c: "d"
+      c: "d",
     });
   });
 });

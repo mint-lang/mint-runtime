@@ -153,8 +153,18 @@ export const array = function() {
 
 export const style = function(items) {
   const result = {};
+
   for (let item of items) {
-    if (item instanceof Map) {
+    if (typeof item === "string") {
+      item.split(";")
+        .forEach((prop) => {
+          const [key, value] = prop.split(":")
+
+          if (key && value) {
+            result[key] = value
+          }
+        })
+    } else if (item instanceof Map) {
       for (let [key, value] of item) {
         result[key] = value;
       }
@@ -164,5 +174,6 @@ export const style = function(items) {
       }
     }
   }
+
   return result;
 };
