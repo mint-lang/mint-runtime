@@ -156,14 +156,13 @@ export const style = function(items) {
 
   for (let item of items) {
     if (typeof item === "string") {
-      item.split(";")
-        .forEach((prop) => {
-          const [key, value] = prop.split(":")
+      item.split(";").forEach(prop => {
+        const [key, value] = prop.split(":");
 
-          if (key && value) {
-            result[key] = value
-          }
-        })
+        if (key && value) {
+          result[key] = value;
+        }
+      });
     } else if (item instanceof Map) {
       for (let [key, value] of item) {
         result[key] = value;
