@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 
 import { navigate } from "./Utils";
+import { Ok } from "./Result";
 import "event-propagation-path";
 
 class Root extends React.Component {
@@ -72,6 +73,7 @@ export default class Program {
         item.handler();
       } else {
         let path = new RouteParser(item.path);
+
         let match = path.match(
           window.location.pathname +
             window.location.search +
@@ -79,17 +81,21 @@ export default class Program {
         );
 
         if (match) {
-          let args = item.mapping.map(name => {
-            return match[name];
-          });
+          try {
+            let args = item.mapping.map((name, index) => {
+              const value = match[name];
+              const result = item.decoders[index](value);
 
-          let params = item.mapping.reduce((memo, name) => {
-            memo[name] = match[name];
-            return memo;
-          }, {});
+              if (result instanceof Ok) {
+                return result.value;
+              } else {
+                throw "";
+              }
+            });
 
-          item.handler.apply(null, args);
-          break;
+            item.handler.apply(null, args);
+            break;
+          } catch (_) {}
         }
       }
     }

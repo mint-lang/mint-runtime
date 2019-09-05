@@ -20,22 +20,27 @@ class $Link extends React.Component {
         onClick: event => {
           event.preventDefault();
         }
+      }),
+      React.createElement("a", {
+        href: "/user/asd"
       })
     );
   }
 }
 
-const { program, navigate } = Main;
+const { program, navigate, Decoder } = Main;
 
 const route = {
   path: "/user/:id",
   handler: jest.fn(),
+  decoders: [Decoder.number],
   mapping: ["id"]
 };
 
 const linkRoute = {
   path: "/user/:id",
   handler: jest.fn(),
+  decoders: [Decoder.number],
   mapping: ["id"]
 };
 
@@ -89,6 +94,16 @@ describe("handling links", () => {
     expect(linkRoute.handler.mock.calls.length).toBe(0);
   });
 
+  test("it does not navigates if param type is different", () => {
+    let event = new window.Event("click", { bubbles: true });
+
+    program.routes = [linkRoute];
+    program.render($Link);
+    program.root.querySelector("a:nth-child(5)").dispatchEvent(event);
+
+    expect(linkRoute.handler.mock.calls.length).toBe(0);
+  });
+
   test("it navigates to local link", () => {
     let event = new window.Event("click", { bubbles: true });
 
@@ -97,7 +112,7 @@ describe("handling links", () => {
     program.root.querySelector("a").dispatchEvent(event);
 
     expect(linkRoute.handler.mock.calls.length).toBe(1);
-    expect(linkRoute.handler.mock.calls[0][0]).toBe("5");
+    expect(linkRoute.handler.mock.calls[0][0]).toBe(5);
   });
 });
 
@@ -110,7 +125,7 @@ describe("handling navigation", () => {
     program.routes = [route];
     navigate("/user/1");
     expect(route.handler.mock.calls.length).toBe(1);
-    expect(route.handler.mock.calls[0][0]).toBe("1");
+    expect(route.handler.mock.calls[0][0]).toBe(1);
   });
 
   test("if it does not match it does nothing", () => {
