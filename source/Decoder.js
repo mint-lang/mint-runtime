@@ -139,7 +139,13 @@ const string = input => {
 };
 
 const time = input => {
-  const parsed = Date.parse(input);
+  let parsed = NaN;
+
+  if (typeof input === "number") {
+    parsed = new Date(input);
+  } else {
+    parsed = Date.parse(input);
+  }
 
   if (Number.isNaN(parsed)) {
     return new Err(new Error(NOT_A_TIME.replace("{value}", format(input))));

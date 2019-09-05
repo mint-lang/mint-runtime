@@ -88,8 +88,15 @@ describe("time", () => {
     expect(typeof result.value.toString()).toBe("string");
   });
 
-  test("ok", () => {
+  test("ok (string)", () => {
     const result = Decoder.time("2018-06-03T06:24:48.319Z");
+
+    expect(result).toBeInstanceOf(Ok);
+    expect(result.value).toBeInstanceOf(Date);
+  });
+
+  test("ok (number)", () => {
+    const result = Decoder.time(100);
 
     expect(result).toBeInstanceOf(Ok);
     expect(result.value).toBeInstanceOf(Date);
