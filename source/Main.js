@@ -11,10 +11,8 @@ import {
   array,
   style
 } from "./Utils";
-import { Nothing, Just } from "./Maybe";
 import { compare } from "./Compare";
 import { Equals } from "./Symbols";
-import { Ok, Err } from "./Result";
 
 import { Record, create } from "./Record";
 import TestContext from "./TestContext";
@@ -29,44 +27,49 @@ import Enum from "./Enum";
 
 import "./Ext";
 
-export default {
-  program: new Program(),
+export default enums => {
+  const DecoderWithEnums = Decoder(enums);
 
-  normalizeEvent: normalizeEvent,
-  insertStyles: insertStyles,
-  navigate: navigate,
-  compare: compare,
-  update: update,
-  encode: encode,
-  array: array,
-  style: style,
-  at: at,
+  return {
+    program: new (Program(enums))(),
 
-  ReactDOM: ReactDOM,
-  React: React,
+    normalizeEvent: normalizeEvent,
+    insertStyles: insertStyles,
+    navigate: navigate,
+    compare: compare,
+    update: update,
+    array: array,
+    style: style,
 
-  TestContext: TestContext,
-  Component: Component,
-  Provider: Provider,
-  Module: Module,
-  Store: Store,
+    encode: encode(enums),
+    at: at(enums),
 
-  Nothing: Nothing,
-  Just: Just,
+    ReactDOM: ReactDOM,
+    React: React,
 
-  Err: Err,
-  Ok: Ok,
+    TestContext: TestContext,
+    Component: Component,
+    Provider: Provider,
+    Module: Module,
+    Store: Store,
 
-  Decoder: Decoder,
-  DateFNS: DateFNS,
-  Record: Record,
-  Enum: Enum,
+    Decoder: DecoderWithEnums,
+    DateFNS: DateFNS,
+    Record: Record,
+    Enum: Enum,
 
-  createPortal: ReactDOM.createPortal,
-  createElement: React.createElement,
-  createRecord: create,
+    Nothing: enums.nothing,
+    Just: enums.just,
 
-  Symbols: {
-    Equals: Equals
-  }
+    Err: enums.err,
+    Ok: enums.ok,
+
+    createRecord: create(DecoderWithEnums, enums),
+    createPortal: ReactDOM.createPortal,
+    createElement: React.createElement,
+
+    Symbols: {
+      Equals: Equals
+    }
+  };
 };

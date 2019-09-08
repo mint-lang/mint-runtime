@@ -1,4 +1,4 @@
-import Main from "../source/Main.js";
+import Main from "./Main.js";
 
 const {
   compare,
@@ -97,7 +97,7 @@ describe("at", () => {
     let result = at([0], 0);
 
     expect(result).toBeInstanceOf(Just);
-    expect(result.value).toBe(0);
+    expect(result._0).toBe(0);
   });
 
   test("it returns nothing for an element", () => {

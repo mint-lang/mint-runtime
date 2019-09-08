@@ -1,4 +1,4 @@
-import Main from "../source/Main.js";
+import Main from "./Main.js";
 
 const { compare, Record, createRecord, Decoder, Ok, Err } = Main;
 
@@ -61,11 +61,11 @@ describe("creating a record", () => {
     });
 
     expect(result instanceof Ok).toBe(true);
-    expect(result.value.a).toBe(true);
-    expect(result.value.b).toBe(true);
-    expect(result.value.c).toBe(true);
-    expect(result.value.d).toBe(true);
-    expect(result.value.e).toBe(true);
+    expect(result._0.a).toBe(true);
+    expect(result._0.b).toBe(true);
+    expect(result._0.c).toBe(true);
+    expect(result._0.d).toBe(true);
+    expect(result._0.e).toBe(true);
   });
 
   it("returns an error if can't decode", () => {

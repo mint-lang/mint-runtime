@@ -1,4 +1,4 @@
-import Main from "../source/Main.js";
+import Main from "./Main.js";
 import React from "react";
 
 class $Main extends React.Component {

@@ -1,5 +1,5 @@
 import { Error, format } from "../source/Decoder.js";
-import Mint from "../source/Main.js";
+import Mint from "./Main.js";
 
 const { Decoder, Err, Ok, Just, Nothing } = Mint;
 
@@ -14,16 +14,16 @@ describe("field", () => {
     const result = Decoder.field("", Decoder.string)([]);
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBeInstanceOf(Error);
-    expect(typeof result.value.toString()).toBe("string");
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
   });
 
   test("Missing key", () => {
     const result = Decoder.field("", Decoder.string)({});
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBeInstanceOf(Error);
-    expect(typeof result.value.toString()).toBe("string");
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
   });
 
   test("Propagated error", () => {
@@ -31,17 +31,17 @@ describe("field", () => {
     const result = Decoder.field("blah", Decoder.string)(input);
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBeInstanceOf(Error);
-    expect(typeof result.value.toString()).toBe("string");
-    expect(result.value.object).toBe(input);
-    expect(result.value.path.length).toBe(1);
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
+    expect(result._0.object).toBe(input);
+    expect(result._0.path.length).toBe(1);
   });
 
   test("ok", () => {
     const result = Decoder.field("blah", Decoder.string)({ blah: "Hello" });
 
     expect(result).toBeInstanceOf(Ok);
-    expect(result.value).toBe("Hello");
+    expect(result._0).toBe("Hello");
   });
 });
 
@@ -50,15 +50,15 @@ describe("string", () => {
     const result = Decoder.string(0);
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBeInstanceOf(Error);
-    expect(typeof result.value.toString()).toBe("string");
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
   });
 
   test("ok", () => {
     const result = Decoder.string("blah");
 
     expect(result).toBeInstanceOf(Ok);
-    expect(result.value).toBe("blah");
+    expect(result._0).toBe("blah");
   });
 });
 
@@ -67,15 +67,15 @@ describe("number", () => {
     const result = Decoder.number("asd");
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBeInstanceOf(Error);
-    expect(typeof result.value.toString()).toBe("string");
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
   });
 
   test("ok", () => {
     const result = Decoder.number(0.123);
 
     expect(result).toBeInstanceOf(Ok);
-    expect(result.value).toBe(0.123);
+    expect(result._0).toBe(0.123);
   });
 });
 
@@ -84,22 +84,22 @@ describe("time", () => {
     const result = Decoder.time("asd");
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBeInstanceOf(Error);
-    expect(typeof result.value.toString()).toBe("string");
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
   });
 
   test("ok (string)", () => {
     const result = Decoder.time("2018-06-03T06:24:48.319Z");
 
     expect(result).toBeInstanceOf(Ok);
-    expect(result.value).toBeInstanceOf(Date);
+    expect(result._0).toBeInstanceOf(Date);
   });
 
   test("ok (number)", () => {
     const result = Decoder.time(100);
 
     expect(result).toBeInstanceOf(Ok);
-    expect(result.value).toBeInstanceOf(Date);
+    expect(result._0).toBeInstanceOf(Date);
   });
 });
 
@@ -108,15 +108,15 @@ describe("boolean", () => {
     const result = Decoder.boolean("asd");
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBeInstanceOf(Error);
-    expect(typeof result.value.toString()).toBe("string");
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
   });
 
   test("ok", () => {
     const result = Decoder.boolean(true);
 
     expect(result).toBeInstanceOf(Ok);
-    expect(result.value).toBe(true);
+    expect(result._0).toBe(true);
   });
 });
 
@@ -125,8 +125,8 @@ describe("array", () => {
     const result = Decoder.array(Decoder.string)("asd");
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBeInstanceOf(Error);
-    expect(typeof result.value.toString()).toBe("string");
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
   });
 
   test("item error", () => {
@@ -134,17 +134,17 @@ describe("array", () => {
     const result = Decoder.array(Decoder.string)(input);
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBeInstanceOf(Error);
-    expect(typeof result.value.toString()).toBe("string");
-    expect(result.value.object).toBe(input);
-    expect(result.value.path.length).toBe(1);
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
+    expect(result._0.object).toBe(input);
+    expect(result._0.path.length).toBe(1);
   });
 
   test("ok", () => {
     const result = Decoder.array(Decoder.string)(["asd"]);
 
     expect(result).toBeInstanceOf(Ok);
-    expect(result.value).toEqual(["asd"]);
+    expect(result._0).toEqual(["asd"]);
   });
 });
 
@@ -153,30 +153,30 @@ describe("maybe", () => {
     const result = Decoder.maybe(Decoder.string)(0);
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBeInstanceOf(Error);
-    expect(typeof result.value.toString()).toBe("string");
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
   });
 
   test("undefined", () => {
     const result = Decoder.maybe(Decoder.string)(undefined);
 
     expect(result).toBeInstanceOf(Ok);
-    expect(result.value).toBeInstanceOf(Nothing);
+    expect(result._0).toBeInstanceOf(Nothing);
   });
 
   test("null", () => {
     const result = Decoder.maybe(Decoder.string)(null);
 
     expect(result).toBeInstanceOf(Ok);
-    expect(result.value).toBeInstanceOf(Nothing);
+    expect(result._0).toBeInstanceOf(Nothing);
   });
 
   test("ok", () => {
     const result = Decoder.maybe(Decoder.string)("asd");
 
     expect(result).toBeInstanceOf(Ok);
-    expect(result.value).toBeInstanceOf(Just);
-    expect(result.value.value).toBe("asd");
+    expect(result._0).toBeInstanceOf(Just);
+    expect(result._0._0).toBe("asd");
   });
 });
 
@@ -185,16 +185,16 @@ describe("map", () => {
     const result = Decoder.map(Decoder.string)(0);
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBeInstanceOf(Error);
-    expect(typeof result.value.toString()).toBe("string");
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
   });
 
   test("array", () => {
     const result = Decoder.map(Decoder.string)([]);
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBeInstanceOf(Error);
-    expect(typeof result.value.toString()).toBe("string");
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
   });
 
   test("invalid value", () => {
@@ -202,8 +202,8 @@ describe("map", () => {
     const result = Decoder.map(Decoder.string)(map);
 
     expect(result).toBeInstanceOf(Err);
-    expect(result.value).toBeInstanceOf(Error);
-    expect(typeof result.value.toString()).toBe("string");
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
   });
 
   test("ok", () => {
@@ -211,7 +211,7 @@ describe("map", () => {
     const result = Decoder.map(Decoder.string)(map);
 
     expect(result).toBeInstanceOf(Ok);
-    expect(result.value).toBeInstanceOf(Map);
+    expect(result._0).toBeInstanceOf(Map);
   });
 });
 
@@ -244,9 +244,9 @@ describe("complex error", () => {
 
     const result = decoder(input);
 
-    expect(result.value).toBeInstanceOf(Error);
-    expect(typeof result.value.toString()).toBe("string");
-    expect(result.value.object).toBe(input);
-    expect(result.value.path.length).toBe(6);
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
+    expect(result._0.object).toBe(input);
+    expect(result._0.path.length).toBe(6);
   });
 });

@@ -1,4 +1,3 @@
-import { Nothing, Just } from "./Maybe";
 import { Equals } from "./Symbols";
 import Record from "./Record";
 
@@ -23,11 +22,13 @@ export const insertStyles = styles => {
   style.innerHTML = styles;
 };
 
-export const at = (array, index) => {
+export const at = enums => (array, index) => {
+  const { just, nothing } = enums;
+
   if (array.length >= index + 1 && index >= 0) {
-    return new Just(array[index]);
+    return new just(array[index]);
   } else {
-    return new Nothing();
+    return new nothing();
   }
 };
 

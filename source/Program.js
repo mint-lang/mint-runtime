@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import React from "react";
 
 import { navigate } from "./Utils";
-import { Ok } from "./Result";
 import "event-propagation-path";
 
 class Root extends React.Component {
@@ -56,66 +55,68 @@ class Root extends React.Component {
 
 Root.displayName = "Mint.Root";
 
-export default class Program {
-  constructor() {
-    this.root = document.createElement("div");
-    document.body.appendChild(this.root);
-    this.routes = [];
+export default enums => {
+  return class Program {
+    constructor() {
+      this.root = document.createElement("div");
+      document.body.appendChild(this.root);
+      this.routes = [];
 
-    window.addEventListener("popstate", () => {
-      this.handlePopState();
-    });
-  }
+      window.addEventListener("popstate", () => {
+        this.handlePopState();
+      });
+    }
 
-  handlePopState() {
-    for (let item of this.routes) {
-      if (item.path === "*") {
-        item.handler();
-      } else {
-        let path = new RouteParser(item.path);
+    handlePopState() {
+      for (let item of this.routes) {
+        if (item.path === "*") {
+          item.handler();
+        } else {
+          let path = new RouteParser(item.path);
 
-        let match = path.match(
-          window.location.pathname +
-            window.location.search +
-            window.location.hash
-        );
+          let match = path.match(
+            window.location.pathname +
+              window.location.search +
+              window.location.hash
+          );
 
-        if (match) {
-          try {
-            let args = item.mapping.map((name, index) => {
-              const value = match[name];
-              const result = item.decoders[index](value);
+          if (match) {
+            try {
+              let args = item.mapping.map((name, index) => {
+                const value = match[name];
+                const result = item.decoders[index](value);
 
-              if (result instanceof Ok) {
-                return result.value;
-              } else {
-                throw "";
-              }
-            });
+                if (result instanceof enums.ok) {
+                  return result._0;
+                } else {
+                  throw "";
+                }
+              });
 
-            item.handler.apply(null, args);
-            break;
-          } catch (_) {}
+              item.handler.apply(null, args);
+              break;
+            } catch (_) {}
+          }
         }
       }
     }
-  }
 
-  render(main) {
-    if (typeof main != "undefined") {
-      this.handlePopState();
-      ReactDOM.render(
-        React.createElement(
-          Root,
-          { routes: this.routes },
-          React.createElement(main)
-        ),
-        this.root
-      );
+    render(main) {
+      if (typeof main != "undefined") {
+        this.handlePopState();
+        ReactDOM.render(
+          React.createElement(
+            Root,
+            { routes: this.routes },
+            React.createElement(main)
+          ),
+          this.root
+        );
+      }
     }
-  }
 
-  addRoutes(routes) {
-    this.routes = this.routes.concat(routes);
-  }
-}
+    addRoutes(routes) {
+      this.routes = this.routes.concat(routes);
+    }
+  };
+};

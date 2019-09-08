@@ -1,6 +1,4 @@
 import indentString from "indent-string";
-import { Nothing, Just } from "./Maybe";
-import { Err, Ok } from "./Result";
 
 export const format = value => {
   let string = JSON.stringify(value, "", 2);
@@ -130,15 +128,19 @@ I was trying to decode the value:
 as a Map, but could not.
 `;
 
-const string = input => {
+const string = enums => input => {
+  const { ok, err } = enums;
+
   if (typeof input != "string") {
-    return new Err(new Error(NOT_A_STRING.replace("{value}", format(input))));
+    return new err(new Error(NOT_A_STRING.replace("{value}", format(input))));
   } else {
-    return new Ok(input);
+    return new ok(input);
   }
 };
 
-const time = input => {
+const time = enums => input => {
+  const { ok, err } = enums;
+
   let parsed = NaN;
 
   if (typeof input === "number") {
@@ -148,31 +150,37 @@ const time = input => {
   }
 
   if (Number.isNaN(parsed)) {
-    return new Err(new Error(NOT_A_TIME.replace("{value}", format(input))));
+    return new err(new Error(NOT_A_TIME.replace("{value}", format(input))));
   } else {
-    return new Ok(new Date(parsed));
+    return new ok(new Date(parsed));
   }
 };
 
-const number = input => {
+const number = enums => input => {
+  const { ok, err } = enums;
+
   let value = parseFloat(input);
 
   if (isNaN(value)) {
-    return new Err(new Error(NOT_A_NUMBER.replace("{value}", format(input))));
+    return new err(new Error(NOT_A_NUMBER.replace("{value}", format(input))));
   } else {
-    return new Ok(value);
+    return new ok(value);
   }
 };
 
-const boolean = input => {
+const boolean = enums => input => {
+  const { ok, err } = enums;
+
   if (typeof input != "boolean") {
-    return new Err(new Error(NOT_A_BOOLEAN.replace("{value}", format(input))));
+    return new err(new Error(NOT_A_BOOLEAN.replace("{value}", format(input))));
   } else {
-    return new Ok(input);
+    return new ok(input);
   }
 };
 
-const field = (key, decoder) => {
+const field = enums => (key, decoder) => {
+  const { err } = enums;
+
   return input => {
     if (
       input == null ||
@@ -185,7 +193,7 @@ const field = (key, decoder) => {
         format(input)
       );
 
-      return new Err(new Error(message));
+      return new err(new Error(message));
     } else {
       const actual = input[key];
 
@@ -195,14 +203,14 @@ const field = (key, decoder) => {
       );
 
       if (typeof actual === "undefined") {
-        return new Err(new Error(message));
+        return new err(new Error(message));
       }
 
       const decoded = decoder(actual);
 
-      if (decoded instanceof Err) {
-        decoded.value.push({ type: "FIELD", value: key });
-        decoded.value.object = input;
+      if (decoded instanceof err) {
+        decoded._0.push({ type: "FIELD", value: key });
+        decoded._0.object = input;
       }
 
       return decoded;
@@ -210,10 +218,12 @@ const field = (key, decoder) => {
   };
 };
 
-const array = decoder => {
+const array = enums => decoder => {
   return input => {
+    const { ok, err } = enums;
+
     if (!Array.isArray(input)) {
-      return new Err(new Error(NOT_AN_ARRAY.replace("{value}", format(input))));
+      return new err(new Error(NOT_AN_ARRAY.replace("{value}", format(input))));
     }
 
     let results = [];
@@ -222,39 +232,43 @@ const array = decoder => {
     for (let item of input) {
       let result = decoder(item);
 
-      if (result instanceof Err) {
-        result.value.push({ type: "ARRAY", value: index });
-        result.value.object = input;
+      if (result instanceof err) {
+        result._0.push({ type: "ARRAY", value: index });
+        result._0.object = input;
         return result;
       } else {
-        results.push(result.value);
+        results.push(result._0);
       }
 
       index++;
     }
 
-    return new Ok(results);
+    return new ok(results);
   };
 };
 
-const maybe = decoder => {
+const maybe = enums => decoder => {
   return input => {
+    const { ok, just, nothing, err } = enums;
+
     if (input == null || input == undefined) {
-      return new Ok(new Nothing());
+      return new ok(new nothing());
     } else {
       const result = decoder(input);
 
-      if (result instanceof Err) {
+      if (result instanceof err) {
         return result;
       } else {
-        return new Ok(new Just(result.value));
+        return new ok(new just(result._0));
       }
     }
   };
 };
 
-const map = decoder => {
+const map = enums => decoder => {
   return input => {
+    const { ok, err } = enums;
+
     if (
       input == null ||
       input == undefined ||
@@ -263,32 +277,32 @@ const map = decoder => {
     ) {
       const message = NOT_A_MAP.replace("{value}", format(input));
 
-      return new Err(new Error(message));
+      return new err(new Error(message));
     } else {
       const map = new Map();
 
       for (let key in input) {
         const result = decoder(input[key]);
 
-        if (result instanceof Err) {
+        if (result instanceof err) {
           return result;
         } else {
-          map.set(key, result.value);
+          map.set(key, result._0);
         }
       }
 
-      return new Ok(map);
+      return new ok(map);
     }
   };
 };
 
-export default {
-  boolean: boolean,
-  number: number,
-  string: string,
-  field: field,
-  array: array,
-  maybe: maybe,
-  time: time,
-  map: map
-};
+export default enums => ({
+  boolean: boolean(enums),
+  number: number(enums),
+  string: string(enums),
+  field: field(enums),
+  array: array(enums),
+  maybe: maybe(enums),
+  time: time(enums),
+  map: map(enums)
+});

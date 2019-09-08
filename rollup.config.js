@@ -18,7 +18,7 @@ export default {
     }),
     uglify({
       mangle: {
-        reserved: ["Err", "Ok", "Maybe", "Just", "Nothing", "Record", "_d"]
+        reserved: ["Record", "_d"]
       }
     })
   ]

@@ -1,4 +1,4 @@
-import Mint from "../source/Main.js";
+import Mint from "./Main.js";
 
 test("comparing same symbols", () => {
   expect(Mint.compare(Symbol("A"), Symbol("A"))).toBe(false);

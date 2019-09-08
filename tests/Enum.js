@@ -1,4 +1,4 @@
-import Mint from "../source/Main.js";
+import Mint from "./Main.js";
 
 const { Enum, compare } = Mint;
 
