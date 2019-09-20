@@ -296,7 +296,7 @@ const map = enums => decoder => {
   };
 };
 
-const object = enums => input => new enums.ok(input)
+const object = enums => input => new enums.ok(input);
 
 export default enums => ({
   boolean: boolean(enums),
