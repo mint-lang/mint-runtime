@@ -45,6 +45,15 @@ describe("field", () => {
   });
 });
 
+describe("object", () => {
+  test("ok", () => {
+    const result = Decoder.object("blah");
+
+    expect(result).toBeInstanceOf(Ok);
+    expect(result._0).toBe("blah");
+  });
+});
+
 describe("string", () => {
   test("error", () => {
     const result = Decoder.string(0);

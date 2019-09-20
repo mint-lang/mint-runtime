@@ -296,8 +296,11 @@ const map = enums => decoder => {
   };
 };
 
+const object = enums => input => new enums.ok(input)
+
 export default enums => ({
   boolean: boolean(enums),
+  object: object(enums),
   number: number(enums),
   string: string(enums),
   field: field(enums),
