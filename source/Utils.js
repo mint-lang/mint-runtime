@@ -6,7 +6,13 @@ export const update = (data, new_data) => {
 };
 
 export const navigate = (url, dispatch = true) => {
-  if (window.location.pathname !== url) {
+  let pathname = window.location.pathname;
+  let search = window.location.search;
+  let hash = window.location.hash;
+
+  let fullPath = pathname + search + hash;
+
+  if (fullPath !== url) {
     window.history.pushState({}, "", url);
 
     if (dispatch) {
