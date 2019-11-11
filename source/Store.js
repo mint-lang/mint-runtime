@@ -1,5 +1,9 @@
+import { bindFunctions } from "./Utils";
+
 export default class Store {
   constructor() {
+    bindFunctions(this);
+
     this.listeners = new Set();
     this.state = {};
   }
