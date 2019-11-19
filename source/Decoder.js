@@ -112,14 +112,6 @@ I was trying to decode the value:
 as an Array, but could not.
 `;
 
-const MISSING_OBJECT_KEY = `
-I was trying to decode the field "{field}" from the object:
-
-{value}
-
-but I could not because it's not an object.
-`;
-
 const NOT_A_MAP = `
 I was trying to decode the value:
 
@@ -179,7 +171,7 @@ const boolean = enums => input => {
 };
 
 const field = enums => (key, decoder) => {
-  const { err } = enums;
+  const { err, nothing } = enums;
 
   return input => {
     if (
@@ -196,15 +188,6 @@ const field = enums => (key, decoder) => {
       return new err(new Error(message));
     } else {
       const actual = input[key];
-
-      const message = MISSING_OBJECT_KEY.replace("{field}", key).replace(
-        "{value}",
-        format(input)
-      );
-
-      if (typeof actual === "undefined") {
-        return new err(new Error(message));
-      }
 
       const decoded = decoder(actual);
 
