@@ -1,9 +1,19 @@
 import Main from "./Main.js";
+
+import ReactDOM from "react-dom";
 import React from "react";
 
 class $Main extends React.Component {
   render() {
     return React.createElement("div", {}, "TEST");
+  }
+}
+
+class $Global extends React.Component {
+  _persist() {}
+
+  render() {
+    return React.createElement("span", {}, "GLOBAL");
   }
 }
 
@@ -51,6 +61,10 @@ const indexRoute = {
 };
 
 describe("handling links", () => {
+  afterEach(() => {
+    ReactDOM.unmountComponentAtNode(program.root);
+  });
+
   test("it does not navigate to local link that does not have a route", () => {
     let event = new window.Event("click", { bubbles: true });
 
@@ -156,5 +170,11 @@ describe("render", () => {
   test("it renders the main component", () => {
     program.render($Main);
     expect(program.root.querySelector("div").textContent).toBe("TEST");
+  });
+
+  test("it renders globals component", done => {
+    program.render($Main, { A: $Global });
+    expect(program.root.querySelector("span").textContent).toBe("GLOBAL");
+    requestAnimationFrame(() => done());
   });
 });

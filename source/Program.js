@@ -45,10 +45,21 @@ class Root extends React.Component {
   }
 
   render() {
+    const components = [];
+
+    for (let key in this.props.globals) {
+      components.push(
+        React.createElement(this.props.globals[key], {
+          ref: item => item._persist(),
+          key: key
+        })
+      );
+    }
+
     return React.createElement(
       "div",
       { onClick: this.handleClick.bind(this) },
-      this.props.children
+      [...components, ...this.props.children]
     );
   }
 }
@@ -101,17 +112,18 @@ export default enums => {
       }
     }
 
-    render(main) {
+    render(main, globals) {
       if (typeof main != "undefined") {
-        this.handlePopState();
         ReactDOM.render(
-          React.createElement(
-            Root,
-            { routes: this.routes },
-            React.createElement(main)
-          ),
+          React.createElement(Root, { routes: this.routes, globals: globals }, [
+            React.createElement(main, { key: "$MAIN" })
+          ]),
           this.root
         );
+
+        requestAnimationFrame(() => {
+          this.handlePopState();
+        });
       }
     }
 
