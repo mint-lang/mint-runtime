@@ -14,6 +14,7 @@ import {
 import { compare } from "./Compare";
 import { Equals } from "./Symbols";
 
+import EmbeddedProgram from "./EmbeddedProgram";
 import { Record, create } from "./Record";
 import TestContext from "./TestContext";
 import Component from "./Component";
@@ -47,6 +48,7 @@ export default enums => {
     ReactDOM: ReactDOM,
     React: React,
 
+    EmbeddedProgram: EmbeddedProgram,
     TestContext: TestContext,
     Component: Component,
     Provider: Provider,
