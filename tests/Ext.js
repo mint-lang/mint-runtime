@@ -55,15 +55,27 @@ describe("URLSearchParams", () => {
 
 describe("Map", () => {
   test("same data are equal", () => {
-    const a = new Map([["A", "B"], ["X", "Y"]]);
-    const b = new Map([["A", "B"], ["X", "Y"]]);
+    const a = new Map([
+      ["A", "B"],
+      ["X", "Y"]
+    ]);
+    const b = new Map([
+      ["A", "B"],
+      ["X", "Y"]
+    ]);
 
     expect(Mint.compare(a, b)).toBe(true);
   });
 
   test("same data with different order are equal", () => {
-    const a = new Map([["X", "Y"], ["A", "B"]]);
-    const b = new Map([["A", "B"], ["X", "Y"]]);
+    const a = new Map([
+      ["X", "Y"],
+      ["A", "B"]
+    ]);
+    const b = new Map([
+      ["A", "B"],
+      ["X", "Y"]
+    ]);
 
     expect(Mint.compare(a, b)).toBe(true);
   });
@@ -76,15 +88,24 @@ describe("Map", () => {
   });
 
   test("different data are not equal", () => {
-    const a = new Map([["A", "B"], ["X", "Z"]]);
-    const b = new Map([["A", "B"], ["X", "Y"]]);
+    const a = new Map([
+      ["A", "B"],
+      ["X", "Z"]
+    ]);
+    const b = new Map([
+      ["A", "B"],
+      ["X", "Y"]
+    ]);
 
     expect(Mint.compare(a, b)).toBe(false);
   });
 
   test("data with different number of keys are not equal", () => {
     const a = new Map([["A", "B"]]);
-    const b = new Map([["A", "B"], ["X", "Y"]]);
+    const b = new Map([
+      ["A", "B"],
+      ["X", "Y"]
+    ]);
 
     expect(Mint.compare(a, b)).toBe(false);
   });

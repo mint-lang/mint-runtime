@@ -1,6 +1,18 @@
-import ReactDOM from "react-dom";
-import DateFNS from "date-fns";
 import React from "react";
+import ReactDOM from "react-dom";
+
+import {
+  format,
+  startOfMonth,
+  startOfWeek,
+  startOfDay,
+  endOfMonth,
+  endOfWeek,
+  endOfDay,
+  addMonths,
+  eachDayOfInterval as eachDay,
+  formatDistanceStrict as distanceInWordsStrict
+} from "date-fns";
 
 import {
   insertStyles,
@@ -56,7 +68,19 @@ export default enums => {
     Store: Store,
 
     Decoder: DecoderWithEnums,
-    DateFNS: DateFNS,
+    // TODO : Refactor `eachDay as eachDayOfInterval`, `distanceInWordsStrict as formatDistanceStrict` in `mint/core/Time`
+    DateFNS: {
+      format,
+      startOfMonth,
+      startOfWeek,
+      startOfDay,
+      endOfMonth,
+      endOfWeek,
+      endOfDay,
+      addMonths,
+      eachDay,
+      distanceInWordsStrict
+    },
     Record: Record,
     Enum: Enum,
 

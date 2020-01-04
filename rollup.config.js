@@ -1,7 +1,7 @@
-import resolve from "rollup-plugin-node-resolve";
-import commonjs from "rollup-plugin-commonjs";
-import replace from "rollup-plugin-replace";
-import uglify from "rollup-plugin-uglify";
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+import replace from "@rollup/plugin-replace";
+import { terser } from "rollup-plugin-terser";
 
 export default {
   input: "source/Main.js",
@@ -16,7 +16,10 @@ export default {
     replace({
       "process.env.NODE_ENV": JSON.stringify("production")
     }),
-    uglify({
+    terser({
+      compress: {
+        passes: 2
+      },
       mangle: {
         reserved: ["Record", "_d"]
       }
