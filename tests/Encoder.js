@@ -52,7 +52,12 @@ describe("encode", () => {
   });
 
   test("map", () => {
-    const result = encode(new Map([["a", "B"], ["c", "0"]]));
+    const result = encode(
+      new Map([
+        ["a", "B"],
+        ["c", "0"]
+      ])
+    );
     expect(result).not.toBeInstanceOf(Map);
     expect(result.a).toBe("B");
     expect(result.c).toBe("0");
