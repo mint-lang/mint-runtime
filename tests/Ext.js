@@ -1,5 +1,10 @@
 import Mint from "./Main.js";
 
+test("comparing nodes", () => {
+  expect(Mint.compare(document.body, document.body)).toBe(true);
+  expect(Mint.compare(document.body, document.head)).toBe(false);
+});
+
 test("comparing same symbols", () => {
   expect(Mint.compare(Symbol("A"), Symbol("A"))).toBe(false);
 });
