@@ -2,8 +2,8 @@ import { compare } from "./Compare";
 import { Equals } from "./Symbols";
 
 Node.prototype[Equals] = function(other) {
-  return this === other
-}
+  return this === other;
+};
 
 Symbol.prototype[Equals] = function(other) {
   return this.valueOf() === other;
