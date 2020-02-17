@@ -1,3 +1,4 @@
+import alias from "@rollup/plugin-alias";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import replace from "@rollup/plugin-replace";
@@ -11,6 +12,12 @@ export default {
     format: "iife"
   },
   plugins: [
+    alias({
+      entries: {
+        react: "preact/compat",
+        "react-dom": "preact/compat"
+      }
+    }),
     resolve(),
     commonjs(),
     replace({
