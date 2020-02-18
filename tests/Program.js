@@ -86,7 +86,7 @@ describe("handling links", () => {
   });
 
   test("it does not navigate if default is prevented already", () => {
-    let event = new window.Event("click", { bubbles: true });
+    let event = new window.Event("click", { bubbles: true, cancelable: true });
 
     program.routes = [linkRoute];
     program.render($Link);
