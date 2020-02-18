@@ -42,7 +42,13 @@ export const normalizeEvent = event => {
   return new Proxy(event, {
     get: function(obj, prop) {
       if (prop in obj) {
-        return obj[prop];
+        const value = obj[prop]
+
+        if (value instanceof Function) {
+          return () => obj[prop]();
+        } else {
+          return value;
+        }
       } else {
         switch (prop) {
           // onCopy onCut onPaste

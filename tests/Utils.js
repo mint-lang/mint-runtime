@@ -115,9 +115,10 @@ describe("at", () => {
 
 describe("normalizeEvent", () => {
   test("returns default values if they are not defined", () => {
-    const event = normalizeEvent({ test: "X" });
+    const event = normalizeEvent({ test: "X", preventDefault: () => 'P' });
 
     expect(() => event.clipboardData.constructor).toThrow();
+    expect(event.preventDefault()).toBe('P');
     expect(event.data).toBe("");
     expect(event.altKey).toBe(false);
     expect(event.charCode).toBe(-1);
