@@ -36,6 +36,7 @@ import encode from "./Encoder";
 import Module from "./Module";
 import Store from "./Store";
 import Enum from "./Enum";
+import { createPortal } from "./Portals";
 
 import "./Ext";
 
@@ -90,7 +91,8 @@ export default enums => {
     Preact: {
       h,
       render,
-      Fragment
+      Fragment,
+      createPortal
     },
 
     Symbols: {
