@@ -1,17 +1,14 @@
-import React from "react";
+import { Component as PreactComponent } from "preact";
 import { bindFunctions } from "./Utils";
 
 const excludedMethods = [
   "componentWillMount",
-  "UNSAFE_componentWillMount",
   "render",
   "getSnapshotBeforeUpdate",
   "componentDidMount",
   "componentWillReceiveProps",
-  "UNSAFE_componentWillReceiveProps",
   "shouldComponentUpdate",
   "componentWillUpdate",
-  "UNSAFE_componentWillUpdate",
   "componentDidUpdate",
   "componentWillUnmount",
   "componentDidCatch",
@@ -20,7 +17,10 @@ const excludedMethods = [
   "constructor"
 ];
 
-export default class Component extends React.PureComponent {
+// FIXME: Is it important that this is a PureComponent? Given it's just a
+// shallow comparsion it would just be overhead for more complicated state
+// anyways.
+export default class Component extends PreactComponent {
   constructor(props) {
     super(props);
     bindFunctions(this, excludedMethods);

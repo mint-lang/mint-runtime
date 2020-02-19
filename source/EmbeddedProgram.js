@@ -1,23 +1,19 @@
-import ReactDOM from "react-dom";
-import React from "react";
+import { Component, h, render } from "preact";
 
-class Root extends React.Component {
+class Root extends Component {
   render() {
     const components = [];
 
     for (let key in this.props.globals) {
       components.push(
-        React.createElement(this.props.globals[key], {
+        h(this.props.globals[key], {
           ref: item => item._persist(),
           key: key
         })
       );
     }
 
-    return React.createElement("div", {}, [
-      ...components,
-      ...this.props.children
-    ]);
+    return h("div", {}, [...components, ...this.props.children]);
   }
 }
 
@@ -35,10 +31,8 @@ export default class Program {
 
   render(main, globals) {
     if (typeof main != "undefined") {
-      ReactDOM.render(
-        React.createElement(Root, { globals: globals }, [
-          React.createElement(main, { key: "$MAIN" })
-        ]),
+      render(
+        h(Root, { globals: globals }, [h(main, { key: "$MAIN" })]),
         this.root
       );
     }

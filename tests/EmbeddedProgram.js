@@ -1,19 +1,17 @@
+import { Component, h, render } from "preact";
 import Main from "./Main.js";
 
-import ReactDOM from "react-dom";
-import React from "react";
-
-class $Main extends React.Component {
+class $Main extends Component {
   render() {
-    return React.createElement("div", {}, "TEST");
+    return h("div", {}, "TEST");
   }
 }
 
-class $Global extends React.Component {
+class $Global extends Component {
   _persist() {}
 
   render() {
-    return React.createElement("span", {}, "GLOBAL");
+    return h("span", {}, "GLOBAL");
   }
 }
 
