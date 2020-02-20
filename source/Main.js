@@ -1,4 +1,5 @@
 import { Fragment, h, render } from "preact";
+import { createPortal } from "preact/compat";
 
 import {
   format,
@@ -36,7 +37,6 @@ import encode from "./Encoder";
 import Module from "./Module";
 import Store from "./Store";
 import Enum from "./Enum";
-import { createPortal } from "./Portals";
 
 import "./Ext";
 
