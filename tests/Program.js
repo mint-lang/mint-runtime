@@ -1,37 +1,35 @@
+import { Component, h, render } from "preact";
 import Main from "./Main.js";
 
-import ReactDOM from "react-dom";
-import React from "react";
-
-class $Main extends React.Component {
+class $Main extends Component {
   render() {
-    return React.createElement("div", {}, "TEST");
+    return h("div", {}, "TEST");
   }
 }
 
-class $Global extends React.Component {
+class $Global extends Component {
   _persist() {}
 
   render() {
-    return React.createElement("span", {}, "GLOBAL");
+    return h("span", {}, "GLOBAL");
   }
 }
 
-class $Link extends React.Component {
+class $Link extends Component {
   render() {
-    return React.createElement(
+    return h(
       "div",
       {},
-      React.createElement("a", { href: "/user/5" }),
-      React.createElement("a", { href: "/blah" }),
-      React.createElement("a", { href: "https://www.google.com/" }),
-      React.createElement("a", {
+      h("a", { href: "/user/5" }),
+      h("a", { href: "/blah" }),
+      h("a", { href: "https://www.google.com/" }),
+      h("a", {
         href: "/user/5",
         onClick: event => {
           event.preventDefault();
         }
       }),
-      React.createElement("a", {
+      h("a", {
         href: "/user/asd"
       })
     );
@@ -61,10 +59,6 @@ const indexRoute = {
 };
 
 describe("handling links", () => {
-  afterEach(() => {
-    ReactDOM.unmountComponentAtNode(program.root);
-  });
-
   test("it does not navigate to local link that does not have a route", () => {
     let event = new window.Event("click", { bubbles: true });
 

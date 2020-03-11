@@ -1,5 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import { Fragment, h, render } from "preact";
+import { createPortal } from "preact/compat";
 
 import {
   format,
@@ -57,9 +57,6 @@ export default enums => {
     encode: encode(enums),
     at: at(enums),
 
-    ReactDOM: ReactDOM,
-    React: React,
-
     EmbeddedProgram: EmbeddedProgram,
     TestContext: TestContext,
     Component: Component,
@@ -91,8 +88,12 @@ export default enums => {
     Ok: enums.ok,
 
     createRecord: create(DecoderWithEnums, enums),
-    createPortal: ReactDOM.createPortal,
-    createElement: React.createElement,
+    Preact: {
+      h,
+      render,
+      Fragment,
+      createPortal
+    },
 
     Symbols: {
       Equals: Equals

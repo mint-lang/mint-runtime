@@ -1,14 +1,11 @@
+import { Component, h, render } from "preact";
 import RouteParser from "route-parser";
-import ReactDOM from "react-dom";
-import React from "react";
-
-import { navigate } from "./Utils";
 import "event-propagation-path";
 
-class Root extends React.Component {
-  handleClick(event, routes) {
-    const nativeEvent = event.nativeEvent;
+import { navigate } from "./Utils";
 
+class Root extends Component {
+  handleClick(event, routes) {
     // If someone prevented default we honor that.
     if (event.defaultPrevented) {
       return;
@@ -20,7 +17,7 @@ class Root extends React.Component {
       return;
     }
 
-    for (let element of event.nativeEvent.propagationPath()) {
+    for (let element of event.propagationPath()) {
       if (element.tagName === "A") {
         let pathname = element.pathname;
         let origin = element.origin;
@@ -49,18 +46,17 @@ class Root extends React.Component {
 
     for (let key in this.props.globals) {
       components.push(
-        React.createElement(this.props.globals[key], {
+        h(this.props.globals[key], {
           ref: item => item._persist(),
           key: key
         })
       );
     }
 
-    return React.createElement(
-      "div",
-      { onClick: this.handleClick.bind(this) },
-      [...components, ...this.props.children]
-    );
+    return h("div", { onClick: this.handleClick.bind(this) }, [
+      ...components,
+      ...this.props.children
+    ]);
   }
 }
 
@@ -113,10 +109,10 @@ export default enums => {
     }
 
     render(main, globals) {
-      if (typeof main != "undefined") {
-        ReactDOM.render(
-          React.createElement(Root, { routes: this.routes, globals: globals }, [
-            React.createElement(main, { key: "$MAIN" })
+      if (typeof main !== "undefined") {
+        render(
+          h(Root, { routes: this.routes, globals: globals }, [
+            h(main, { key: "$MAIN" })
           ]),
           this.root
         );
