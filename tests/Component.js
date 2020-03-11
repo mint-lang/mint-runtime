@@ -5,6 +5,11 @@ const { Component } = Mint;
 class TestComponent extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      blah: "WTF"
+    };
+
     this._d({
       name: [null, "TestComponent"],
       asd: ["test", "ASDF"]
@@ -39,5 +44,19 @@ describe("Component", () => {
   test("creates foreign properties", () => {
     const instance = new TestComponent({ test: "Hello" });
     expect(instance.asd).toEqual("Hello");
+  });
+
+  test("shouldComponentUpdate", () => {
+    const instance = new TestComponent({ test: "Hello" });
+
+    expect(
+      instance.shouldComponentUpdate({ test: "Hello" }, { blah: "WTF" })
+    ).toEqual(false);
+
+    expect(instance.shouldComponentUpdate({}, {})).toEqual(true);
+
+    expect(
+      instance.shouldComponentUpdate({ test: "WTF" }, { blah: "ASD" })
+    ).toEqual(true);
   });
 });

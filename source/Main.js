@@ -65,7 +65,6 @@ export default enums => {
     Store: Store,
 
     Decoder: DecoderWithEnums,
-    // TODO : Refactor `eachDay as eachDayOfInterval`, `distanceInWordsStrict as formatDistanceStrict` in `mint/core/Time`
     DateFNS: {
       format,
       startOfMonth,
@@ -88,13 +87,15 @@ export default enums => {
     Ok: enums.ok,
 
     createRecord: create(DecoderWithEnums, enums),
-    Preact: {
-      h,
-      render,
-      Fragment,
-      createPortal
+    createPortal: createPortal,
+    createElement: h,
+    React: {
+      Fragment: Fragment
     },
-
+    ReactDOM: {
+      unmountComponentAtNode: root => render(null, root),
+      render: render
+    },
     Symbols: {
       Equals: Equals
     }

@@ -1,3 +1,4 @@
+import { compareObjects } from "../source/Compare.js";
 import Main from "./Main.js";
 
 const {
@@ -14,7 +15,17 @@ const {
   style
 } = Main;
 
-console.warn = jest.fn();
+beforeEach(() => {
+  console.warn = jest.fn();
+});
+
+describe("compareObjects", () => {
+  test("compares null and undefined with ===", () => {
+    expect(compareObjects(undefined, undefined)).toBe(true);
+
+    expect(console.warn.mock.calls.length).toBe(1);
+  });
+});
 
 describe("compare", () => {
   test("compares null and undefined with ===", () => {
@@ -23,7 +34,7 @@ describe("compare", () => {
     expect(compare(undefined, null)).toBe(false);
     expect(compare(null, null)).toBe(true);
 
-    expect(console.warn.mock.calls.length).toBe(4);
+    expect(console.warn.mock.calls.length).toBe(2);
   });
 
   test("compares with the value that is not null", () => {

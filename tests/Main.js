@@ -32,6 +32,12 @@ class Nothing extends Enum {
   }
 }
 
-export default Main({ err: Err, ok: Ok, just: Just, nothing: Nothing });
+const main = Main({ err: Err, ok: Ok, just: Just, nothing: Nothing });
 
-test("it passes", () => {});
+export default main;
+
+describe("unmountComponentAtNode", () => {
+  test("clears the element", () => {
+    expect(main.ReactDOM.unmountComponentAtNode(document.createElement("div")));
+  });
+});

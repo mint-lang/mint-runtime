@@ -1,4 +1,5 @@
 import { Component as PreactComponent } from "preact";
+import { compareObjects } from "./Compare";
 import { bindFunctions } from "./Utils";
 
 const excludedMethods = [
@@ -17,13 +18,17 @@ const excludedMethods = [
   "constructor"
 ];
 
-// FIXME: Is it important that this is a PureComponent? Given it's just a
-// shallow comparsion it would just be overhead for more complicated state
-// anyways.
 export default class Component extends PreactComponent {
   constructor(props) {
     super(props);
     bindFunctions(this, excludedMethods);
+  }
+
+  shouldComponentUpdate(props, state) {
+    let propsChanged = !compareObjects(this.props, props);
+    let stateChanged = !compareObjects(this.state, state);
+
+    return propsChanged || stateChanged;
   }
 
   _d(object) {
