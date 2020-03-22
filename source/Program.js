@@ -69,6 +69,8 @@ export default enums => {
       document.body.appendChild(this.root);
       this.routes = [];
 
+      this.shadow = this.root.attachShadow({mode: 'open'});
+
       window.addEventListener("popstate", () => {
         this.handlePopState();
       });
@@ -108,13 +110,14 @@ export default enums => {
       }
     }
 
-    render(main, globals) {
+    render(main, globals, styles) {
       if (typeof main !== "undefined") {
         render(
           h(Root, { routes: this.routes, globals: globals }, [
+            h('style', { dangerouslySetInnerHTML: { __html: styles }}),
             h(main, { key: "$MAIN" })
           ]),
-          this.root
+          this.shadow
         );
 
         requestAnimationFrame(() => {

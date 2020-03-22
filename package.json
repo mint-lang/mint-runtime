@@ -18,7 +18,7 @@
     "date-fns": "^2.8.1",
     "event-propagation-path": "^1.0.5",
     "indent-string": "^4.0.0",
-    "jest": "^24.9.0",
+    "jest": "^25.1.0",
     "preact": "^10.3.2",
     "prettier": "^1.19.1",
     "regenerator-runtime": "^0.13.3",

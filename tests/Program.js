@@ -64,7 +64,7 @@ describe("handling links", () => {
 
     program.routes = [linkRoute];
     program.render($Link);
-    program.root.querySelector("a:nth-child(2)").dispatchEvent(event);
+    program.shadow.querySelector("a:nth-child(2)").dispatchEvent(event);
 
     expect(linkRoute.handler.mock.calls.length).toBe(0);
   });
@@ -74,7 +74,7 @@ describe("handling links", () => {
 
     program.routes = [linkRoute];
     program.render($Link);
-    program.root.querySelector("a:nth-child(3)").dispatchEvent(event);
+    program.shadow.querySelector("a:nth-child(3)").dispatchEvent(event);
 
     expect(linkRoute.handler.mock.calls.length).toBe(0);
   });
@@ -84,7 +84,7 @@ describe("handling links", () => {
 
     program.routes = [linkRoute];
     program.render($Link);
-    program.root.querySelector("a:nth-child(4)").dispatchEvent(event);
+    program.shadow.querySelector("a:nth-child(4)").dispatchEvent(event);
 
     expect(linkRoute.handler.mock.calls.length).toBe(0);
   });
@@ -97,7 +97,7 @@ describe("handling links", () => {
 
     program.routes = [linkRoute];
     program.render($Link);
-    program.root.querySelector("a:nth-child(1)").dispatchEvent(event);
+    program.shadow.querySelector("a:nth-child(1)").dispatchEvent(event);
 
     expect(linkRoute.handler.mock.calls.length).toBe(0);
   });
@@ -107,7 +107,7 @@ describe("handling links", () => {
 
     program.routes = [linkRoute];
     program.render($Link);
-    program.root.querySelector("a:nth-child(5)").dispatchEvent(event);
+    program.shadow.querySelector("a:nth-child(5)").dispatchEvent(event);
 
     expect(linkRoute.handler.mock.calls.length).toBe(0);
   });
@@ -117,7 +117,7 @@ describe("handling links", () => {
 
     program.routes = [linkRoute];
     program.render($Link);
-    program.root.querySelector("a").dispatchEvent(event);
+    program.shadow.querySelector("a").dispatchEvent(event);
 
     expect(linkRoute.handler.mock.calls.length).toBe(1);
     expect(linkRoute.handler.mock.calls[0][0]).toBe(5);
@@ -163,12 +163,12 @@ describe("render", () => {
 
   test("it renders the main component", () => {
     program.render($Main);
-    expect(program.root.querySelector("div").textContent).toBe("TEST");
+    expect(program.shadow.querySelector("div").textContent).toBe("TEST");
   });
 
   test("it renders globals component", done => {
     program.render($Main, { A: $Global });
-    expect(program.root.querySelector("span").textContent).toBe("GLOBAL");
+    expect(program.shadow.querySelector("span").textContent).toBe("GLOBAL");
     requestAnimationFrame(() => done());
   });
 });

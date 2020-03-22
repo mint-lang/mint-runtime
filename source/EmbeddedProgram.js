@@ -29,10 +29,13 @@ export default class Program {
     }
   }
 
-  render(main, globals) {
+  render(main, globals, styles) {
     if (typeof main != "undefined") {
       render(
-        h(Root, { globals: globals }, [h(main, { key: "$MAIN" })]),
+        h(Root, { globals: globals }, [
+          h('style', { dangerouslySetInnerHTML: { __html: styles }}),
+          h(main, { key: "$MAIN" })
+        ]),
         this.root
       );
     }
