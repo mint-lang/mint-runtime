@@ -1,5 +1,15 @@
 import Mint from "./Main.js";
 
+const REACT_ELEMENT = Symbol.for("react.element");
+
+test("comparing react elements", () => {
+  expect(
+    Mint.compare({ $$typeof: REACT_ELEMENT }, { $$typeof: REACT_ELEMENT })
+  ).toBe(false);
+
+  expect(Mint.compare(null, { $$typeof: REACT_ELEMENT })).toBe(false);
+});
+
 test("comparing nodes", () => {
   expect(Mint.compare(document.body, document.body)).toBe(true);
   expect(Mint.compare(document.body, document.head)).toBe(false);

@@ -1,5 +1,7 @@
 import { Equals } from "./Symbols";
 
+const REACT_ELEMENT = Symbol.for("react.element");
+
 export const compare = (a, b) => {
   if ((a === undefined && b === undefined) || (a === null && b === null)) {
     return true;
@@ -7,6 +9,11 @@ export const compare = (a, b) => {
     return a[Equals](b);
   } else if (b != null && b != undefined && b[Equals]) {
     return b[Equals](a);
+  } else if (
+    (a && a.$$typeof === REACT_ELEMENT) ||
+    (b && b.$$typeof === REACT_ELEMENT)
+  ) {
+    return a === b;
   } else {
     console.warn(
       "Comparing entites with === because there is no comparison function defined:",
