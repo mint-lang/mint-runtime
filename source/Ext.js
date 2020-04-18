@@ -1,6 +1,10 @@
 import { compare } from "./Compare";
 import { Equals } from "./Symbols";
 
+Function.prototype[Equals] = function(other) {
+  return this === other;
+};
+
 Node.prototype[Equals] = function(other) {
   return this === other;
 };

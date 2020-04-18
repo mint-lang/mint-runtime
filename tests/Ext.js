@@ -14,6 +14,15 @@ test("comparing same arrays", () => {
   expect(Mint.compare(["A"], ["A"])).toBe(true);
 });
 
+test("comparing functions", () => {
+  expect(
+    Mint.compare(
+      () => {},
+      () => {}
+    )
+  ).toBe(false);
+});
+
 test("comparing empty arrays", () => {
   expect([] == []).toBe(false);
   expect(Mint.compare([], [])).toBe(true);
