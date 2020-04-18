@@ -8,7 +8,11 @@ export const compare = (a, b) => {
   } else if (b != null && b != undefined && b[Equals]) {
     return b[Equals](a);
   } else {
-    console.warn(`Could not compare "${a}" with "${b}" comparing with ===`);
+    console.warn(
+      "Comparing entites with === because there is no comparison function defined.",
+      a,
+      b
+    );
     return a === b;
   }
 };
