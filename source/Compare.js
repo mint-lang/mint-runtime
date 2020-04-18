@@ -9,10 +9,11 @@ export const compare = (a, b) => {
     return b[Equals](a);
   } else {
     console.warn(
-      "Comparing entites with === because there is no comparison function defined.",
+      "Comparing entites with === because there is no comparison function defined:",
       a,
       b
     );
+
     return a === b;
   }
 };
@@ -29,7 +30,12 @@ export const compareObjects = (a, b) => {
 
     return true;
   } else {
-    console.warn(`Could not compare "${a}" with "${b}" comparing with ===`);
+    console.warn(
+      "Comparing entites with === because there is no comparison function defined:",
+      a,
+      b
+    );
+
     return a === b;
   }
 };
