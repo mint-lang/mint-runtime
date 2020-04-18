@@ -1,8 +1,14 @@
 import { Equals } from "./Symbols";
 import Record from "./Record";
 
-export const update = (data, new_data) => {
-  return new Record(Object.assign(Object.create(null), data, new_data));
+export const update = (data, newData) => {
+  const updatedData = Object.assign(Object.create(null), data, newData);
+
+  if (data instanceof Record) {
+    return new data.constructor(updatedData);
+  } else {
+    return new Record(updatedData);
+  }
 };
 
 export const navigate = (url, dispatch = true) => {

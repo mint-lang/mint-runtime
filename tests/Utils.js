@@ -2,6 +2,7 @@ import { compareObjects } from "../source/Compare.js";
 import Main from "./Main.js";
 
 const {
+  createRecord,
   compare,
   update,
   Record,
@@ -48,6 +49,22 @@ describe("update", () => {
     let newRecord = update(oldRecord, new Record({ name: "Doe" }));
 
     expect(compare(newRecord, oldRecord)).toBe(false);
+    expect(newRecord.name).toBe("Doe");
+  });
+
+  test("it keeps the constructor", () => {
+    let TestRecord = createRecord({});
+    let testRecord = new TestRecord({});
+    let newRecord = update(testRecord, new Record({ name: "Doe" }));
+
+    expect(newRecord).toBeInstanceOf(TestRecord);
+    expect(newRecord.name).toBe("Doe");
+  });
+
+  test("it creates a record if object is passed", () => {
+    let newRecord = update({}, { name: "Doe" });
+
+    expect(newRecord).toBeInstanceOf(Record);
     expect(newRecord.name).toBe("Doe");
   });
 });
