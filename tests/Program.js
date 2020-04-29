@@ -25,12 +25,12 @@ class $Link extends Component {
       h("a", { href: "https://www.google.com/" }),
       h("a", {
         href: "/user/5",
-        onClick: event => {
+        onClick: (event) => {
           event.preventDefault();
-        }
+        },
       }),
       h("a", {
-        href: "/user/asd"
+        href: "/user/asd",
       })
     );
   }
@@ -42,20 +42,20 @@ const route = {
   path: "/user/:id",
   handler: jest.fn(),
   decoders: [Decoder.number],
-  mapping: ["id"]
+  mapping: ["id"],
 };
 
 const linkRoute = {
   path: "/user/:id",
   handler: jest.fn(),
   decoders: [Decoder.number],
-  mapping: ["id"]
+  mapping: ["id"],
 };
 
 const indexRoute = {
   path: "*",
   handler: jest.fn(),
-  mapping: []
+  mapping: [],
 };
 
 describe("handling links", () => {
@@ -92,7 +92,7 @@ describe("handling links", () => {
   test("it does not if ctrl key is pressed", () => {
     let event = new window.MouseEvent("click", {
       bubbles: true,
-      ctrlKey: true
+      ctrlKey: true,
     });
 
     program.routes = [linkRoute];
@@ -166,7 +166,7 @@ describe("render", () => {
     expect(program.root.querySelector("div").textContent).toBe("TEST");
   });
 
-  test("it renders globals component", done => {
+  test("it renders globals component", (done) => {
     program.render($Main, { A: $Global });
     expect(program.root.querySelector("span").textContent).toBe("GLOBAL");
     requestAnimationFrame(() => done());

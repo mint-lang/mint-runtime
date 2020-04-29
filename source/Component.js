@@ -15,7 +15,7 @@ const excludedMethods = [
   "componentDidCatch",
   "setState",
   "forceUpdate",
-  "constructor"
+  "constructor",
 ];
 
 export default class Component extends PreactComponent {
@@ -34,14 +34,14 @@ export default class Component extends PreactComponent {
   _d(object) {
     const properties = {};
 
-    Object.keys(object).forEach(item => {
+    Object.keys(object).forEach((item) => {
       const [foreign, value] = object[item];
       const key = foreign || item;
 
       properties[item] = {
         get: () => {
           return key in this.props ? this.props[key] : value;
-        }
+        },
       };
     });
 

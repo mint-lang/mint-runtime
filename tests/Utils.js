@@ -12,7 +12,7 @@ const {
   Nothing,
   at,
   array,
-  style
+  style,
 } = Main;
 
 beforeEach(() => {
@@ -98,7 +98,7 @@ describe("style", () => {
     expect(style(["opacity:0;", new Map([["a", "b"]]), { c: "d" }])).toEqual({
       opacity: "0",
       a: "b",
-      c: "d"
+      c: "d",
     });
   });
 });

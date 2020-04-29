@@ -231,11 +231,11 @@ describe("complex error", () => {
         {
           sub: {
             sub2: {
-              sub3: [1]
-            }
-          }
-        }
-      ]
+              sub3: [1],
+            },
+          },
+        },
+      ],
     };
 
     const decoder = Decoder.field(

@@ -1,6 +1,7 @@
 import { Fragment, h, render } from "preact";
 import { createPortal } from "preact/compat";
 
+/*
 import {
   format,
   startOfMonth,
@@ -11,9 +12,9 @@ import {
   endOfDay,
   addMonths,
   eachDayOfInterval as eachDay,
-  formatDistanceStrict as distanceInWordsStrict
+  formatDistanceStrict as distanceInWordsStrict,
 } from "date-fns";
-
+*/
 import {
   insertStyles,
   update,
@@ -21,7 +22,7 @@ import {
   normalizeEvent,
   at,
   array,
-  style
+  style,
 } from "./Utils";
 import { compare } from "./Compare";
 import { Equals } from "./Symbols";
@@ -40,7 +41,7 @@ import Enum from "./Enum";
 
 import "./Ext";
 
-export default enums => {
+export default (enums) => {
   const DecoderWithEnums = Decoder(enums);
 
   return {
@@ -65,6 +66,7 @@ export default enums => {
     Store: Store,
 
     Decoder: DecoderWithEnums,
+    /*
     DateFNS: {
       format,
       startOfMonth,
@@ -75,8 +77,9 @@ export default enums => {
       endOfDay,
       addMonths,
       eachDay,
-      distanceInWordsStrict
+      distanceInWordsStrict,
     },
+    */
     Record: Record,
     Enum: Enum,
 
@@ -90,14 +93,14 @@ export default enums => {
     createPortal: createPortal,
     createElement: h,
     React: {
-      Fragment: Fragment
+      Fragment: Fragment,
     },
     ReactDOM: {
-      unmountComponentAtNode: root => render(null, root),
-      render: render
+      unmountComponentAtNode: (root) => render(null, root),
+      render: render,
     },
     Symbols: {
-      Equals: Equals
-    }
+      Equals: Equals,
+    },
   };
 };

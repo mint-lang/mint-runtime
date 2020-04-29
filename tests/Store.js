@@ -16,7 +16,7 @@ class TestStore extends Store {
 const store = new TestStore();
 
 const listener = {
-  forceUpdate: jest.fn()
+  forceUpdate: jest.fn(),
 };
 
 const callback = jest.fn();

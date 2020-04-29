@@ -1,6 +1,6 @@
 import indentString from "indent-string";
 
-export const format = value => {
+export const format = (value) => {
   let string = JSON.stringify(value, "", 2);
 
   if (typeof string === "undefined") {
@@ -120,7 +120,7 @@ I was trying to decode the value:
 as a Map, but could not.
 `;
 
-const string = enums => input => {
+const string = (enums) => (input) => {
   const { ok, err } = enums;
 
   if (typeof input != "string") {
@@ -130,7 +130,7 @@ const string = enums => input => {
   }
 };
 
-const time = enums => input => {
+const time = (enums) => (input) => {
   const { ok, err } = enums;
 
   let parsed = NaN;
@@ -148,7 +148,7 @@ const time = enums => input => {
   }
 };
 
-const number = enums => input => {
+const number = (enums) => (input) => {
   const { ok, err } = enums;
 
   let value = parseFloat(input);
@@ -160,7 +160,7 @@ const number = enums => input => {
   }
 };
 
-const boolean = enums => input => {
+const boolean = (enums) => (input) => {
   const { ok, err } = enums;
 
   if (typeof input != "boolean") {
@@ -170,10 +170,10 @@ const boolean = enums => input => {
   }
 };
 
-const field = enums => (key, decoder) => {
+const field = (enums) => (key, decoder) => {
   const { err, nothing } = enums;
 
-  return input => {
+  return (input) => {
     if (
       input == null ||
       input == undefined ||
@@ -201,8 +201,8 @@ const field = enums => (key, decoder) => {
   };
 };
 
-const array = enums => decoder => {
-  return input => {
+const array = (enums) => (decoder) => {
+  return (input) => {
     const { ok, err } = enums;
 
     if (!Array.isArray(input)) {
@@ -230,8 +230,8 @@ const array = enums => decoder => {
   };
 };
 
-const maybe = enums => decoder => {
-  return input => {
+const maybe = (enums) => (decoder) => {
+  return (input) => {
     const { ok, just, nothing, err } = enums;
 
     if (input == null || input == undefined) {
@@ -248,8 +248,8 @@ const maybe = enums => decoder => {
   };
 };
 
-const map = enums => decoder => {
-  return input => {
+const map = (enums) => (decoder) => {
+  return (input) => {
     const { ok, err } = enums;
 
     if (
@@ -279,9 +279,9 @@ const map = enums => decoder => {
   };
 };
 
-const object = enums => input => new enums.ok(input);
+const object = (enums) => (input) => new enums.ok(input);
 
-export default enums => ({
+export default (enums) => ({
   boolean: boolean(enums),
   object: object(enums),
   number: number(enums),
@@ -290,5 +290,5 @@ export default enums => ({
   array: array(enums),
   maybe: maybe(enums),
   time: time(enums),
-  map: map(enums)
+  map: map(enums),
 });
