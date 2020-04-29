@@ -1,7 +1,6 @@
 import { Fragment, h, render } from "preact";
 import { createPortal } from "preact/compat";
 
-/*
 import {
   format,
   startOfMonth,
@@ -14,7 +13,7 @@ import {
   eachDayOfInterval as eachDay,
   formatDistanceStrict as distanceInWordsStrict,
 } from "date-fns";
-*/
+
 import {
   insertStyles,
   update,
@@ -66,7 +65,6 @@ export default (enums) => {
     Store: Store,
 
     Decoder: DecoderWithEnums,
-    /*
     DateFNS: {
       format,
       startOfMonth,
@@ -79,7 +77,6 @@ export default (enums) => {
       eachDay,
       distanceInWordsStrict,
     },
-    */
     Record: Record,
     Enum: Enum,
 
