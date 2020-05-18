@@ -1,12 +1,33 @@
+import { compareObjects } from "./Compare";
+import { bindFunctions } from "./Utils";
+
 export default class Provider {
   constructor() {
+    bindFunctions(this);
+
     this.subscriptions = new Map();
+    this.state = {};
+  }
+
+  setState(state, callback) {
+    this.state = Object.assign({}, this.state, state);
+    callback();
   }
 
   _subscribe(owner, object) {
-    if (this.subscriptions.has(owner)) {
+    const current = this.subscriptions.get(owner);
+
+    /* Objects will always be records. */
+    if (
+      object === null ||
+      object === undefined ||
+      (current !== undefined &&
+        current !== null &&
+        compareObjects(current, object))
+    ) {
       return;
     }
+
     this.subscriptions.set(owner, object);
     this._update();
   }
@@ -15,27 +36,18 @@ export default class Provider {
     if (!this.subscriptions.has(owner)) {
       return;
     }
+
     this.subscriptions.delete(owner);
     this._update();
   }
 
   _update() {
-    if (this.subscriptions.size == 0) {
-      this.detach();
-    } else {
-      this.attach();
-    }
+    this.update();
   }
 
   get _subscriptions() {
-    let array = [];
-    for (let item of this.subscriptions.values()) {
-      array.push(item);
-    }
-    return array;
+    return Array.from(this.subscriptions.values());
   }
 
-  attach() {}
-
-  detach() {}
+  update() {}
 }
