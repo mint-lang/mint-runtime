@@ -270,7 +270,7 @@ const map = enums => decoder => {
         if (result instanceof err) {
           return result;
         } else {
-          map.push([key, result._0])
+          map.push([key, result._0]);
         }
       }
 
