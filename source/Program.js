@@ -47,22 +47,22 @@ class Root extends Component {
     for (let key in this.props.globals) {
       components.push(
         h(this.props.globals[key], {
-          ref: item => item._persist(),
-          key: key
+          ref: (item) => item._persist(),
+          key: key,
         })
       );
     }
 
     return h("div", { onClick: this.handleClick.bind(this) }, [
       ...components,
-      ...this.props.children
+      ...this.props.children,
     ]);
   }
 }
 
 Root.displayName = "Mint.Root";
 
-export default enums => {
+export default (enums) => {
   return class Program {
     constructor() {
       this.root = document.createElement("div");
@@ -112,7 +112,7 @@ export default enums => {
       if (typeof main !== "undefined") {
         render(
           h(Root, { routes: this.routes, globals: globals }, [
-            h(main, { key: "$MAIN" })
+            h(main, { key: "$MAIN" }),
           ]),
           this.root
         );

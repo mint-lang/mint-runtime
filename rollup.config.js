@@ -8,21 +8,21 @@ export default {
   output: {
     file: "bundle.js",
     name: "Mint",
-    format: "iife"
+    format: "iife",
   },
   plugins: [
     resolve(),
     commonjs(),
     replace({
-      "process.env.NODE_ENV": JSON.stringify("production")
+      "process.env.NODE_ENV": JSON.stringify("production"),
     }),
     terser({
       compress: {
-        passes: 2
+        passes: 2,
       },
       mangle: {
-        reserved: ["Record", "_d"]
-      }
-    })
-  ]
+        reserved: ["Record", "_d"],
+      },
+    }),
+  ],
 };

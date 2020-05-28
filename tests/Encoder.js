@@ -55,7 +55,7 @@ describe("encode", () => {
     const result = encode(
       new Map([
         ["a", "B"],
-        ["c", "0"]
+        ["c", "0"],
       ])
     );
     expect(result).not.toBeInstanceOf(Map);

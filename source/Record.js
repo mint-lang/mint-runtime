@@ -27,11 +27,11 @@ export class Record {
   }
 }
 
-export const create = (Decoder, enums) => mappings => {
+export const create = (Decoder, enums) => (mappings) => {
   const item = class extends Record {};
 
   item.mappings = mappings;
-  item.decode = _input => {
+  item.decode = (_input) => {
     const { ok, err } = enums;
     const object = {};
 

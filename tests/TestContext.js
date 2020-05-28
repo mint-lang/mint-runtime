@@ -15,7 +15,7 @@ describe("teardown", () => {
   test("it is called after success", async () => {
     const teardown = jest.fn();
     const context = new TestContext("A", teardown);
-    context.step(subject => {
+    context.step((subject) => {
       return subject == "A";
     });
 
@@ -28,10 +28,10 @@ describe("teardown", () => {
   test("it is called after failure", async () => {
     const teardown = jest.fn();
     const context = new TestContext("A", teardown);
-    context.step(subject => {
+    context.step((subject) => {
       return subject == "A";
     });
-    context.step(subject => {
+    context.step((subject) => {
       throw "WTF";
     });
 

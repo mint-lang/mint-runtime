@@ -49,7 +49,7 @@ describe("creating a record", () => {
       b: ["multiline", Decoder.boolean],
       c: ["unicode", Decoder.boolean],
       d: ["global", Decoder.boolean],
-      e: ["sticky", Decoder.boolean]
+      e: ["sticky", Decoder.boolean],
     });
 
     const result = C.decode({
@@ -57,7 +57,7 @@ describe("creating a record", () => {
       multiline: true,
       unicode: true,
       global: true,
-      sticky: true
+      sticky: true,
     });
 
     expect(result instanceof Ok).toBe(true);
@@ -74,7 +74,7 @@ describe("creating a record", () => {
       b: ["multiline", Decoder.boolean],
       c: ["unicode", Decoder.boolean],
       d: ["global", Decoder.boolean],
-      e: ["sticky", Decoder.boolean]
+      e: ["sticky", Decoder.boolean],
     });
 
     const result = C.decode({
@@ -82,7 +82,7 @@ describe("creating a record", () => {
       multiline: true,
       unicode: true,
       global: true,
-      sticky: true
+      sticky: true,
     });
 
     expect(result instanceof Err).toBe(true);

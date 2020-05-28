@@ -13,7 +13,7 @@ const {
   Nothing,
   at,
   array,
-  style
+  style,
 } = Main;
 
 beforeEach(() => {
@@ -118,7 +118,7 @@ describe("style", () => {
       opacity: "0",
       a: "b",
       x: "y",
-      c: "d"
+      c: "d",
     });
   });
 });
