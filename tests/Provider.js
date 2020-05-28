@@ -10,7 +10,7 @@ describe("subscribing", () => {
 
   test("cover setState", () => {
     const provider = new Provider();
-    provider.setState({ name: "value" });
+    provider.setState({ name: "value" }, () => {});
 
     expect(provider.state.name).toBe("value");
   });

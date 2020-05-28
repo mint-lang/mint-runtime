@@ -220,7 +220,8 @@ describe("map", () => {
     const result = Decoder.map(Decoder.string)(map);
 
     expect(result).toBeInstanceOf(Ok);
-    expect(result._0).toBeInstanceOf(Map);
+    expect(result._0).toBeInstanceOf(Array);
+    expect(result._0).toEqual([["a", "1"]]);
   });
 });
 

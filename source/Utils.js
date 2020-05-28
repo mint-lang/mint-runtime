@@ -186,6 +186,10 @@ export const style = function(items) {
       for (let [key, value] of item) {
         result[key] = value;
       }
+    } else if (item instanceof Array) {
+      for (let [key, value] of item) {
+        result[key] = value;
+      }
     } else {
       for (let key in item) {
         result[key] = item[key];
