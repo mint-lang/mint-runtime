@@ -27,13 +27,12 @@
     "route-parser": "^0.0.5"
   },
   "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
     "coverageReporters": [
       "html",
       "text"
     ],
-    "testURL": "http://localhost/",
-    "collectCoverage": true,
-    "browser": true,
     "testMatch": [
       "**/tests/*.js"
     ]
