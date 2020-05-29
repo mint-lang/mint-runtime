@@ -81,11 +81,11 @@ describe("Map", () => {
   test("same data are equal", () => {
     const a = new Map([
       ["A", "B"],
-      ["X", "Y"]
+      ["X", "Y"],
     ]);
     const b = new Map([
       ["A", "B"],
-      ["X", "Y"]
+      ["X", "Y"],
     ]);
 
     expect(Mint.compare(a, b)).toBe(true);
@@ -94,11 +94,11 @@ describe("Map", () => {
   test("same data with different order are equal", () => {
     const a = new Map([
       ["X", "Y"],
-      ["A", "B"]
+      ["A", "B"],
     ]);
     const b = new Map([
       ["A", "B"],
-      ["X", "Y"]
+      ["X", "Y"],
     ]);
 
     expect(Mint.compare(a, b)).toBe(true);
@@ -114,11 +114,11 @@ describe("Map", () => {
   test("different data are not equal", () => {
     const a = new Map([
       ["A", "B"],
-      ["X", "Z"]
+      ["X", "Z"],
     ]);
     const b = new Map([
       ["A", "B"],
-      ["X", "Y"]
+      ["X", "Y"],
     ]);
 
     expect(Mint.compare(a, b)).toBe(false);
@@ -128,7 +128,7 @@ describe("Map", () => {
     const a = new Map([["A", "B"]]);
     const b = new Map([
       ["A", "B"],
-      ["X", "Y"]
+      ["X", "Y"],
     ]);
 
     expect(Mint.compare(a, b)).toBe(false);

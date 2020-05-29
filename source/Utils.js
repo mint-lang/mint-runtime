@@ -28,13 +28,13 @@ export const navigate = (url, dispatch = true) => {
   }
 };
 
-export const insertStyles = styles => {
+export const insertStyles = (styles) => {
   let style = document.createElement("style");
   document.head.appendChild(style);
   style.innerHTML = styles;
 };
 
-export const at = enums => (array, index) => {
+export const at = (enums) => (array, index) => {
   const { just, nothing } = enums;
 
   if (array.length >= index + 1 && index >= 0) {
@@ -44,9 +44,9 @@ export const at = enums => (array, index) => {
   }
 };
 
-export const normalizeEvent = event => {
+export const normalizeEvent = (event) => {
   return new Proxy(event, {
-    get: function(obj, prop) {
+    get: function (obj, prop) {
       if (prop in obj) {
         const value = obj[prop];
 
@@ -140,7 +140,7 @@ export const normalizeEvent = event => {
             return undefined;
         }
       }
-    }
+    },
   });
 };
 
@@ -161,7 +161,7 @@ export const bindFunctions = (target, exclude) => {
   }
 };
 
-export const array = function() {
+export const array = function () {
   let items = Array.from(arguments);
   if (Array.isArray(items[0]) && items.length === 1) {
     return items[0];
@@ -170,12 +170,12 @@ export const array = function() {
   }
 };
 
-export const style = function(items) {
+export const style = function (items) {
   const result = {};
 
   for (let item of items) {
     if (typeof item === "string") {
-      item.split(";").forEach(prop => {
+      item.split(";").forEach((prop) => {
         const [key, value] = prop.split(":");
 
         if (key && value) {

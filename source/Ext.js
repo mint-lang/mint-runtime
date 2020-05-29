@@ -1,35 +1,35 @@
 import { compare } from "./Compare";
 import { Equals } from "./Symbols";
 
-Function.prototype[Equals] = function(other) {
+Function.prototype[Equals] = function (other) {
   return this === other;
 };
 
-Node.prototype[Equals] = function(other) {
+Node.prototype[Equals] = function (other) {
   return this === other;
 };
 
-Symbol.prototype[Equals] = function(other) {
+Symbol.prototype[Equals] = function (other) {
   return this.valueOf() === other;
 };
 
-Date.prototype[Equals] = function(other) {
+Date.prototype[Equals] = function (other) {
   return +this === +other;
 };
 
-Number.prototype[Equals] = function(other) {
+Number.prototype[Equals] = function (other) {
   return this.valueOf() === other;
 };
 
-Boolean.prototype[Equals] = function(other) {
+Boolean.prototype[Equals] = function (other) {
   return this.valueOf() === other;
 };
 
-String.prototype[Equals] = function(other) {
+String.prototype[Equals] = function (other) {
   return this.valueOf() === other;
 };
 
-Array.prototype[Equals] = function(other) {
+Array.prototype[Equals] = function (other) {
   if (this.length !== other.length) {
     return false;
   }
@@ -47,7 +47,7 @@ Array.prototype[Equals] = function(other) {
   return true;
 };
 
-FormData.prototype[Equals] = function(other) {
+FormData.prototype[Equals] = function (other) {
   const aKeys = Array.from(this.keys()).sort();
   const bKeys = Array.from(other.keys()).sort();
 
@@ -71,15 +71,15 @@ FormData.prototype[Equals] = function(other) {
   }
 };
 
-URLSearchParams.prototype[Equals] = function(other) {
+URLSearchParams.prototype[Equals] = function (other) {
   return this.toString() === other.toString();
 };
 
-Set.prototype[Equals] = function(other) {
+Set.prototype[Equals] = function (other) {
   return compare(Array.from(this).sort(), Array.from(other).sort());
 };
 
-Map.prototype[Equals] = function(other) {
+Map.prototype[Equals] = function (other) {
   const aKeys = Array.from(this.keys()).sort();
   const bKeys = Array.from(other.keys()).sort();
 
