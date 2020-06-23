@@ -1,6 +1,17 @@
 import { compare } from "./Compare";
 import { Equals } from "./Symbols";
 
+const nullOrUndefined = function(value) {
+  if (value === null) {
+    return true;
+  }
+  if (value === undefined) {
+    return true;
+  }
+
+  return false;
+};
+
 Function.prototype[Equals] = function(other) {
   return this === other;
 };
@@ -30,6 +41,10 @@ String.prototype[Equals] = function(other) {
 };
 
 Array.prototype[Equals] = function(other) {
+  if (nullOrUndefined(other)) {
+    return false;
+  }
+
   if (this.length !== other.length) {
     return false;
   }
@@ -48,6 +63,10 @@ Array.prototype[Equals] = function(other) {
 };
 
 FormData.prototype[Equals] = function(other) {
+  if (nullOrUndefined(other)) {
+    return false;
+  }
+
   const aKeys = Array.from(this.keys()).sort();
   const bKeys = Array.from(other.keys()).sort();
 
@@ -72,14 +91,26 @@ FormData.prototype[Equals] = function(other) {
 };
 
 URLSearchParams.prototype[Equals] = function(other) {
+  if (nullOrUndefined(other)) {
+    return false;
+  }
+
   return this.toString() === other.toString();
 };
 
 Set.prototype[Equals] = function(other) {
+  if (nullOrUndefined(other)) {
+    return false;
+  }
+
   return compare(Array.from(this).sort(), Array.from(other).sort());
 };
 
 Map.prototype[Equals] = function(other) {
+  if (nullOrUndefined(other)) {
+    return false;
+  }
+
   const aKeys = Array.from(this.keys()).sort();
   const bKeys = Array.from(other.keys()).sort();
 

@@ -38,6 +38,14 @@ test("comparing empty arrays", () => {
   expect(Mint.compare([], [])).toBe(true);
 });
 
+test("comparing arrays with null", () => {
+  expect(Mint.compare([], null)).toBe(false);
+});
+
+test("comparing arrays with undefined", () => {
+  expect(Mint.compare([], undefined)).toBe(false);
+});
+
 test("comparing different length arrays", () => {
   expect(["A"] == ["A"]).toBe(false);
   expect(Mint.compare(["A", "B"], ["A"])).toBe(false);
@@ -69,6 +77,18 @@ test("comparing booleans", () => {
 });
 
 describe("URLSearchParams", () => {
+  test("false for null", () => {
+    const a = new URLSearchParams("a=b&c=d");
+
+    expect(Mint.compare(a, null)).toBe(false);
+  });
+
+  test("false for undefined", () => {
+    const a = new URLSearchParams("a=b&c=d");
+
+    expect(Mint.compare(a, undefined)).toBe(false);
+  });
+
   test("same data are equal", () => {
     const a = new URLSearchParams("a=b&c=d");
     const b = new URLSearchParams("a=b&c=d");
@@ -78,6 +98,18 @@ describe("URLSearchParams", () => {
 });
 
 describe("Map", () => {
+  test("false for undefined", () => {
+    const a = new Map();
+
+    expect(Mint.compare(a, undefined)).toBe(false);
+  });
+
+  test("false for null", () => {
+    const a = new Map();
+
+    expect(Mint.compare(a, null)).toBe(false);
+  });
+
   test("same data are equal", () => {
     const a = new Map([
       ["A", "B"],
@@ -136,6 +168,18 @@ describe("Map", () => {
 });
 
 describe("Set", () => {
+  test("false for undefined", () => {
+    const a = new Set([]);
+
+    expect(Mint.compare(a, undefined)).toBe(false);
+  });
+
+  test("false for null", () => {
+    const a = new Set([]);
+
+    expect(Mint.compare(a, null)).toBe(false);
+  });
+
   test("same data are equal", () => {
     const a = new Set(["A", "B", "B"]);
     const b = new Set(["A", "B", "B"]);
@@ -159,6 +203,18 @@ describe("Set", () => {
 });
 
 describe("FormData", () => {
+  test("false for undefined", () => {
+    const a = new FormData();
+
+    expect(Mint.compare(a, undefined)).toBe(false);
+  });
+
+  test("false for null", () => {
+    const a = new FormData();
+
+    expect(Mint.compare(a, null)).toBe(false);
+  });
+
   test("empty form datas are equal", () => {
     expect(Mint.compare(new FormData(), new FormData())).toBe(true);
   });
