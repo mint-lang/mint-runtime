@@ -37,7 +37,7 @@ describe("render", () => {
     expect(program.root.querySelector("div").textContent).toBe("TEST");
   });
 
-  test("it renders globals component", done => {
+  test("it renders globals component", (done) => {
     const program = new EmbeddedProgram();
     program.render($Main, { A: $Global });
 

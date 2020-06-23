@@ -7,8 +7,8 @@ class Root extends Component {
     for (let key in this.props.globals) {
       components.push(
         h(this.props.globals[key], {
-          ref: item => item._persist(),
-          key: key
+          ref: (item) => item._persist(),
+          key: key,
         })
       );
     }

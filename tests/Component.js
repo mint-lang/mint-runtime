@@ -7,12 +7,12 @@ class TestComponent extends Component {
     super(props);
 
     this.state = {
-      blah: "WTF"
+      blah: "WTF",
     };
 
     this._d({
       name: [null, "TestComponent"],
-      asd: ["test", "ASDF"]
+      asd: ["test", "ASDF"],
     });
   }
 

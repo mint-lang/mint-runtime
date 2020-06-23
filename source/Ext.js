@@ -1,7 +1,7 @@
 import { compare } from "./Compare";
 import { Equals } from "./Symbols";
 
-const nullOrUndefined = function(value) {
+const nullOrUndefined = function (value) {
   if (value === null) {
     return true;
   }
@@ -12,35 +12,35 @@ const nullOrUndefined = function(value) {
   return false;
 };
 
-Function.prototype[Equals] = function(other) {
+Function.prototype[Equals] = function (other) {
   return this === other;
 };
 
-Node.prototype[Equals] = function(other) {
+Node.prototype[Equals] = function (other) {
   return this === other;
 };
 
-Symbol.prototype[Equals] = function(other) {
+Symbol.prototype[Equals] = function (other) {
   return this.valueOf() === other;
 };
 
-Date.prototype[Equals] = function(other) {
+Date.prototype[Equals] = function (other) {
   return +this === +other;
 };
 
-Number.prototype[Equals] = function(other) {
+Number.prototype[Equals] = function (other) {
   return this.valueOf() === other;
 };
 
-Boolean.prototype[Equals] = function(other) {
+Boolean.prototype[Equals] = function (other) {
   return this.valueOf() === other;
 };
 
-String.prototype[Equals] = function(other) {
+String.prototype[Equals] = function (other) {
   return this.valueOf() === other;
 };
 
-Array.prototype[Equals] = function(other) {
+Array.prototype[Equals] = function (other) {
   if (nullOrUndefined(other)) {
     return false;
   }
@@ -62,7 +62,7 @@ Array.prototype[Equals] = function(other) {
   return true;
 };
 
-FormData.prototype[Equals] = function(other) {
+FormData.prototype[Equals] = function (other) {
   if (nullOrUndefined(other)) {
     return false;
   }
@@ -90,7 +90,7 @@ FormData.prototype[Equals] = function(other) {
   }
 };
 
-URLSearchParams.prototype[Equals] = function(other) {
+URLSearchParams.prototype[Equals] = function (other) {
   if (nullOrUndefined(other)) {
     return false;
   }
@@ -98,7 +98,7 @@ URLSearchParams.prototype[Equals] = function(other) {
   return this.toString() === other.toString();
 };
 
-Set.prototype[Equals] = function(other) {
+Set.prototype[Equals] = function (other) {
   if (nullOrUndefined(other)) {
     return false;
   }
@@ -106,7 +106,7 @@ Set.prototype[Equals] = function(other) {
   return compare(Array.from(this).sort(), Array.from(other).sort());
 };
 
-Map.prototype[Equals] = function(other) {
+Map.prototype[Equals] = function (other) {
   if (nullOrUndefined(other)) {
     return false;
   }

@@ -1,6 +1,6 @@
 import Record from "./Record";
 
-const encode = enums => item => {
+const encode = (enums) => (item) => {
   const { just, nothing } = enums;
 
   if (item == null || item == undefined) {
