@@ -1,5 +1,5 @@
+import { bindFunctions, setConstants } from "./Utils";
 import { compareObjects } from "./Compare";
-import { bindFunctions } from "./Utils";
 
 export default class Provider {
   constructor() {
@@ -12,6 +12,10 @@ export default class Provider {
   setState(state, callback) {
     this.state = Object.assign({}, this.state, state);
     callback();
+  }
+
+  _d(constants) {
+    setConstants(this, constants);
   }
 
   _subscribe(owner, object) {

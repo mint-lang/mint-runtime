@@ -1,4 +1,4 @@
-import { bindFunctions } from "./Utils";
+import { bindFunctions, setConstants } from "./Utils";
 
 export default class Store {
   constructor() {
@@ -16,6 +16,10 @@ export default class Store {
     }
 
     callback();
+  }
+
+  _d(constants) {
+    setConstants(this, constants);
   }
 
   _subscribe(owner) {

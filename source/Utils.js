@@ -161,6 +161,28 @@ export const bindFunctions = (target, exclude) => {
   }
 };
 
+export const setConstants = (target, object) => {
+  if (!object) {
+    return;
+  }
+  const properties = {};
+
+  Object.keys(object).forEach((key) => {
+    let value = null;
+
+    properties[key] = {
+      get: () => {
+        if (!value) {
+          value = object[key]();
+        }
+        return value;
+      },
+    };
+  });
+
+  Object.defineProperties(target, properties);
+};
+
 export const array = function () {
   let items = Array.from(arguments);
   if (Array.isArray(items[0]) && items.length === 1) {

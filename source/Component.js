@@ -1,6 +1,6 @@
 import { Component as PreactComponent } from "preact";
+import { bindFunctions, setConstants } from "./Utils";
 import { compareObjects } from "./Compare";
-import { bindFunctions } from "./Utils";
 
 const excludedMethods = [
   "componentWillMount",
@@ -31,7 +31,9 @@ export default class Component extends PreactComponent {
     return propsChanged || stateChanged;
   }
 
-  _d(object) {
+  _d(object, constants) {
+    setConstants(this, constants);
+
     const properties = {};
 
     Object.keys(object).forEach((item) => {
