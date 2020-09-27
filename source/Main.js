@@ -33,7 +33,7 @@ import Component from "./Component";
 import Provider from "./Provider";
 import Program from "./Program";
 import Decoder from "./Decoder";
-import encode from "./Encoder";
+import Encoder from "./Encoder";
 import Module from "./Module";
 import Store from "./Store";
 import Enum from "./Enum";
@@ -54,7 +54,6 @@ export default (enums) => {
     array: array,
     style: style,
 
-    encode: encode(enums),
     at: at(enums),
 
     EmbeddedProgram: EmbeddedProgram,
@@ -65,6 +64,7 @@ export default (enums) => {
     Store: Store,
 
     Decoder: DecoderWithEnums,
+    Encoder: Encoder(enums),
     DateFNS: {
       format,
       startOfMonth,

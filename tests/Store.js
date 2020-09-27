@@ -6,6 +6,9 @@ class TestStore extends Store {
   constructor() {
     super();
     this.state = { name: "Joe" };
+    this._d({
+      TEST: () => +new Date(),
+    });
   }
 
   get name() {

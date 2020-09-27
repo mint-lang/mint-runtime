@@ -31,6 +31,20 @@ export const create = (Decoder, enums) => (mappings) => {
   const item = class extends Record {};
 
   item.mappings = mappings;
+
+  item.encode = (record) => {
+    const { nothing, just } = enums;
+
+    const object = {};
+
+    for (let key in mappings) {
+      const [otherKey, _, encoder] = mappings[key];
+      object[otherKey] = encoder ? encoder(record[key]) : record[key];
+    }
+
+    return object;
+  };
+
   item.decode = (_input) => {
     const { ok, err } = enums;
     const object = {};

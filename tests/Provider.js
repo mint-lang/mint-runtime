@@ -2,21 +2,30 @@ import Main from "./Main.js";
 
 const { Provider } = Main;
 
+class TestProvider extends Provider {
+  constructor() {
+    super();
+    this._d({
+      TEST: () => +new Date(),
+    });
+  }
+}
+
 describe("subscribing", () => {
   test("cover update", () => {
-    const provider = new Provider();
+    const provider = new TestProvider();
     provider.update();
   });
 
   test("cover setState", () => {
-    const provider = new Provider();
+    const provider = new TestProvider();
     provider.setState({ name: "value" }, () => {});
 
     expect(provider.state.name).toBe("value");
   });
 
   test("calls update", () => {
-    const provider = new Provider();
+    const provider = new TestProvider();
     provider.update = jest.fn();
     provider._subscribe("A", { data: "data" });
 
@@ -27,7 +36,7 @@ describe("subscribing", () => {
   });
 
   test("does not call _update many times", () => {
-    const provider = new Provider();
+    const provider = new TestProvider();
     provider._update = jest.fn();
     provider._subscribe("A", { data: "data" });
     provider._subscribe("A", { data: "data" });
@@ -36,7 +45,7 @@ describe("subscribing", () => {
   });
 
   test("does not call _update without any data", () => {
-    const provider = new Provider();
+    const provider = new TestProvider();
     provider._update = jest.fn();
     provider._subscribe("A");
 
@@ -46,7 +55,7 @@ describe("subscribing", () => {
 
 describe("unsubscribing", () => {
   test("calls update", () => {
-    const provider = new Provider();
+    const provider = new TestProvider();
     provider.update = jest.fn();
     provider._subscribe("A", { data: "data" });
     provider._unsubscribe("A");
@@ -56,7 +65,7 @@ describe("unsubscribing", () => {
   });
 
   test("does nothing if not subscribed", () => {
-    const provider = new Provider();
+    const provider = new TestProvider();
     provider.update = jest.fn();
     provider._unsubscribe("A");
 
