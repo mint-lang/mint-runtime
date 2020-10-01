@@ -61,6 +61,10 @@ export const normalizeEvent = (event) => {
           case "clipboardData":
             return new DataTransfer();
 
+          // drag events
+          case "dataTransfer":
+            return new DataTransfer();
+
           // onCompositionEnd onCompositionStart onCompositionUpdate
           case "data":
             return "";
