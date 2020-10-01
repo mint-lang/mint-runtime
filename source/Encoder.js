@@ -3,19 +3,25 @@ import Record from "./Record";
 const identity = (value) => value;
 const time = (value) => +value;
 
-const map = (value) => {
+const array = (encoder) => (value) => {
+  return value.map((item) => {
+    return encoder ? encoder(item) : item;
+  });
+};
+
+const map = (encoder) => (value) => {
   const result = {};
 
   for (let item of value) {
-    result[item[0]] = item[1];
+    result[item[0]] = encoder ? encoder(item[1]) : item[1];
   }
 
   return result;
 };
 
-const maybe = (enums) => (value) => {
+const maybe = (enums) => (encoder) => (value) => {
   if (value instanceof enums.just) {
-    return value._0;
+    return encoder ? encoder(value._0) : value._0;
   } else {
     return null;
   }
@@ -24,6 +30,7 @@ const maybe = (enums) => (value) => {
 export default (enums) => ({
   maybe: maybe(enums),
   identity: identity,
+  array: array,
   time: time,
   map: map,
 });

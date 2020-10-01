@@ -22,12 +22,17 @@ describe("Encoder.time", () => {
 
 describe("Encoder.maybe", () => {
   test("Nothing", () => {
-    const result = Encoder.maybe(new Nothing());
+    const result = Encoder.maybe((value) => value)(new Nothing());
     expect(result).toBe(null);
   });
 
-  test("Just", () => {
-    const result = Encoder.maybe(new Just("a"));
+  test("Just with encoder", () => {
+    const result = Encoder.maybe((value) => value)(new Just("a"));
+    expect(result).toBe("a");
+  });
+
+  test("Just without encoder", () => {
+    const result = Encoder.maybe()(new Just("a"));
     expect(result).toBe("a");
   });
 });
@@ -44,8 +49,8 @@ describe("Record", () => {
 });
 
 describe("Map", () => {
-  test("encodes", () => {
-    const result = Encoder.map([
+  test("encodes with encoder", () => {
+    const result = Encoder.map((value) => value)([
       ["a", "B"],
       ["c", "0"],
     ]);
@@ -53,5 +58,34 @@ describe("Map", () => {
     expect(result).not.toBeInstanceOf(Map);
     expect(result.a).toBe("B");
     expect(result.c).toBe("0");
+  });
+
+  test("encodes without", () => {
+    const result = Encoder.map()([
+      ["a", "B"],
+      ["c", "0"],
+    ]);
+
+    expect(result).not.toBeInstanceOf(Map);
+    expect(result.a).toBe("B");
+    expect(result.c).toBe("0");
+  });
+});
+
+describe("Array", () => {
+  test("encodes with encoder", () => {
+    const result = Encoder.array((value) => value)(["B", "0"]);
+
+    expect(result).not.toBeInstanceOf(Map);
+    expect(result[0]).toBe("B");
+    expect(result[1]).toBe("0");
+  });
+
+  test("encodes without encoder", () => {
+    const result = Encoder.array()(["B", "0"]);
+
+    expect(result).not.toBeInstanceOf(Map);
+    expect(result[0]).toBe("B");
+    expect(result[1]).toBe("0");
   });
 });
