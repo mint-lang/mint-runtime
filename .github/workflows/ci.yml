@@ -14,5 +14,6 @@ jobs:
       with:
         node-version: v12.18.3
     - run: | 
+        yarn
         yarn lint
         yarn test
