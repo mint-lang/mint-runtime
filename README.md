@@ -1,4 +1,4 @@
 # Mint Runtime
-[![Build Status](https://travis-ci.org/mint-lang/mint-runtime.svg?branch=master)](https://travis-ci.org/mint-lang/mint-runtime)
+![CI](https://github.com/mint-lang/mint-runtime/workflows/CI/badge.svg?branch=master)
 
 The runtime (JavaScript) code for the Mint programming language.
