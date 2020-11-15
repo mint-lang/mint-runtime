@@ -26,12 +26,18 @@ class Root extends Component {
 
         if (origin === window.location.origin) {
           for (let item of this.props.routes) {
-            let fullPath = pathname + search + hash;
+            let originalPath =
+              window.location.pathname + window.location.search;
+            let partialPath = pathname + search;
+            let fullPath = partialPath + hash;
             let path = new RouteParser(item.path);
-            let match = path.match(fullPath);
+            let match = item.path == "*" ? true : path.match(fullPath);
 
             if (match) {
-              event.preventDefault();
+              if (originalPath != partialPath) {
+                event.preventDefault();
+              }
+
               navigate(fullPath);
               return;
             }

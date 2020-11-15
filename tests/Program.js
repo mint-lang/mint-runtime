@@ -31,7 +31,8 @@ class $Link extends Component {
       }),
       h("a", {
         href: "/user/asd",
-      })
+      }),
+      h("a", { href: "#hash" })
     );
   }
 }
@@ -122,6 +123,16 @@ describe("handling links", () => {
     expect(linkRoute.handler.mock.calls.length).toBe(1);
     expect(linkRoute.handler.mock.calls[0][0]).toBe(5);
   });
+
+  test("it does not prevent native hash behavior", () => {
+    let event = new window.Event("click", { bubbles: true });
+
+    program.routes = [indexRoute];
+    program.render($Link);
+    program.root.querySelector("a:nth-child(6)").dispatchEvent(event);
+
+    expect(linkRoute.handler.mock.calls.length).toBe(1);
+  });
 });
 
 describe("handling navigation", () => {
@@ -144,7 +155,7 @@ describe("handling navigation", () => {
   test("handles index route", () => {
     program.routes = [indexRoute];
     navigate("/user/2");
-    expect(indexRoute.handler.mock.calls.length).toBe(1);
+    expect(indexRoute.handler.mock.calls.length).toBe(3);
   });
 });
 
