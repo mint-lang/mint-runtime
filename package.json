@@ -19,7 +19,7 @@
     "event-propagation-path": "^1.0.5",
     "indent-string": "^4.0.0",
     "jest": "^26.4.2",
-    "preact": "^10.4.8",
+    "preact": "^10.5.2",
     "prettier": "^2.1.2",
     "regenerator-runtime": "^0.13.7",
     "rollup": "^2.27.1",
