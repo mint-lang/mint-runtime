@@ -2,7 +2,7 @@ import { Component, h, render } from "preact";
 import Main from "./Main.js";
 
 global.requestIdleCallback = (callback) => callback();
-global.scrollTo = jest.fn()
+global.scrollTo = jest.fn();
 
 class $Main extends Component {
   render() {

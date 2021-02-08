@@ -78,9 +78,14 @@ export default (enums) => {
     resolvePagePosition() {
       // After everything settled.
       requestIdleCallback(() => {
-        const hashAnchor = this.root.querySelector(
-          `a[name="${window.location.hash.slice(1)}"]`
-        );
+        let hashAnchor;
+
+        try {
+          hashAnchor = this.root.querySelector(
+            `a[name="${window.location.hash.slice(1)}"]`
+          );
+        } finally {
+        }
 
         if (window.location.hash && hashAnchor) {
           // This triggers a jump to the hash.
