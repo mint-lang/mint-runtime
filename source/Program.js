@@ -26,18 +26,13 @@ class Root extends Component {
 
         if (origin === window.location.origin) {
           for (let item of this.props.routes) {
-            let originalPath =
-              window.location.pathname + window.location.search;
             let partialPath = pathname + search;
             let fullPath = partialPath + hash;
             let path = new RouteParser(item.path);
             let match = item.path == "*" ? true : path.match(fullPath);
 
             if (match) {
-              if (originalPath != partialPath) {
-                event.preventDefault();
-              }
-
+              event.preventDefault();
               navigate(fullPath);
               return;
             }
@@ -80,10 +75,28 @@ export default (enums) => {
       });
     }
 
+    resolvePagePosition() {
+      // After everything settled.
+      requestIdleCallback(() => {
+        const hashAnchor = this.root.querySelector(
+          `a[name="${window.location.hash.slice(1)}"]`
+        );
+
+        if (window.location.hash && hashAnchor) {
+          // This triggers a jump to the hash.
+          window.location.href = window.location.hash;
+        } else {
+          // Otherwise scroll to the top of the page.
+          window.scrollTo(document.body.scrollTop, 0);
+        }
+      });
+    }
+
     handlePopState() {
       for (let item of this.routes) {
         if (item.path === "*") {
           item.handler();
+          this.resolvePagePosition();
         } else {
           let path = new RouteParser(item.path);
 
@@ -107,6 +120,8 @@ export default (enums) => {
               });
 
               item.handler.apply(null, args);
+              this.resolvePagePosition();
+
               break;
             } catch (_) {}
           }

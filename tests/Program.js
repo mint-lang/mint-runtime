@@ -1,6 +1,9 @@
 import { Component, h, render } from "preact";
 import Main from "./Main.js";
 
+global.requestIdleCallback = (callback) => callback();
+global.scrollTo = jest.fn()
+
 class $Main extends Component {
   render() {
     return h("div", {}, "TEST");
@@ -32,7 +35,7 @@ class $Link extends Component {
       h("a", {
         href: "/user/asd",
       }),
-      h("a", { href: "#hash" })
+      h("a", { href: "#hash", name: "hash" })
     );
   }
 }

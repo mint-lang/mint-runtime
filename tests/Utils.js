@@ -28,7 +28,7 @@ describe("compareObjects", () => {
   });
 
   test("returns false for not equal objects", () => {
-    expect(compareObjects({a: "A"}, {a: "B"})).toBe(false);
+    expect(compareObjects({ a: "A" }, { a: "B" })).toBe(false);
   });
 });
 
@@ -154,10 +154,10 @@ describe("normalizeEvent", () => {
 
     expect(event.dataTransfer).not.toBe(undefined);
 
-    expect(event.dataTransfer.setData("test", "test")).toBe(null)
-    expect(event.dataTransfer.getData("not present")).toBe("")
-    expect(event.dataTransfer.getData("test")).toBe("test")
-    expect(event.dataTransfer.clearData()).toBe(null)
+    expect(event.dataTransfer.setData("test", "test")).toBe(null);
+    expect(event.dataTransfer.getData("not present")).toBe("");
+    expect(event.dataTransfer.getData("test")).toBe("test");
+    expect(event.dataTransfer.clearData()).toBe(null);
 
     expect(event.clipboardData).not.toBe(undefined);
     expect(event.preventDefault()).toBe("P");

@@ -82,11 +82,11 @@ export const normalizeEvent = (event) => {
         switch (prop) {
           // onCopy onCut onPaste
           case "clipboardData":
-            return obj.clipboardData = new DataTransfer();
+            return (obj.clipboardData = new DataTransfer());
 
           // drag events
           case "dataTransfer":
-            return obj.dataTransfer = new DataTransfer();
+            return (obj.dataTransfer = new DataTransfer());
 
           // onCompositionEnd onCompositionStart onCompositionUpdate
           case "data":
