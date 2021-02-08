@@ -1,6 +1,5 @@
 import { Component as PreactComponent } from "preact";
 import { bindFunctions, setConstants } from "./Utils";
-import { compareObjects } from "./Compare";
 
 const excludedMethods = [
   "componentWillMount",
@@ -22,13 +21,6 @@ export default class Component extends PreactComponent {
   constructor(props) {
     super(props);
     bindFunctions(this, excludedMethods);
-  }
-
-  shouldComponentUpdate(props, state) {
-    let propsChanged = !compareObjects(this.props, props);
-    let stateChanged = !compareObjects(this.state, state);
-
-    return propsChanged || stateChanged;
   }
 
   _d(object, constants) {

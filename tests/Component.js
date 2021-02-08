@@ -45,18 +45,4 @@ describe("Component", () => {
     const instance = new TestComponent({ test: "Hello" });
     expect(instance.asd).toEqual("Hello");
   });
-
-  test("shouldComponentUpdate", () => {
-    const instance = new TestComponent({ test: "Hello" });
-
-    expect(
-      instance.shouldComponentUpdate({ test: "Hello" }, { blah: "WTF" })
-    ).toEqual(false);
-
-    expect(instance.shouldComponentUpdate({}, {})).toEqual(true);
-
-    expect(
-      instance.shouldComponentUpdate({ test: "WTF" }, { blah: "ASD" })
-    ).toEqual(true);
-  });
 });
