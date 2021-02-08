@@ -23,7 +23,6 @@ export const navigate = (url, dispatch = true) => {
 
     if (dispatch) {
       dispatchEvent(new PopStateEvent("popstate"));
-    } else {
     }
   }
 };
@@ -44,6 +43,30 @@ export const at = (enums) => (array, index) => {
   }
 };
 
+class DataTransfer {
+  constructor() {
+    this.effectAllowed = "none";
+    this.dropEffect = "none";
+    this.files = [];
+    this.types = [];
+    this.cache = {};
+  }
+
+  getData(format) {
+    return this.cache[format] || "";
+  }
+
+  setData(format, data) {
+    this.cache[format] = data;
+    return null;
+  }
+
+  clearData() {
+    this.cache = {};
+    return null;
+  }
+}
+
 export const normalizeEvent = (event) => {
   return new Proxy(event, {
     get: function (obj, prop) {
@@ -59,11 +82,11 @@ export const normalizeEvent = (event) => {
         switch (prop) {
           // onCopy onCut onPaste
           case "clipboardData":
-            return new DataTransfer();
+            return obj.clipboardData = new DataTransfer();
 
           // drag events
           case "dataTransfer":
-            return new DataTransfer();
+            return obj.dataTransfer = new DataTransfer();
 
           // onCompositionEnd onCompositionStart onCompositionUpdate
           case "data":
