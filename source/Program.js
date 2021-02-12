@@ -76,8 +76,8 @@ export default (enums) => {
     }
 
     resolvePagePosition() {
-      // After everything settled.
-      requestIdleCallback(() => {
+      // On the next frame.
+      requestAnimationFrame(() => {
         let hashAnchor;
 
         try {
