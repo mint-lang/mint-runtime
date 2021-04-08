@@ -21,7 +21,9 @@ class Root extends Component {
       if (element.tagName === "A") {
         // If the target is not empty then it's probably _blank or
         // an other window or frame so we skip.
-        if (element.target.trim() !== "") { return }
+        if (element.target.trim() !== "") {
+          return;
+        }
 
         let pathname = element.pathname;
         let origin = element.origin;
