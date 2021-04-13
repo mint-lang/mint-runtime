@@ -19,10 +19,11 @@ export const navigate = (url, dispatch = true) => {
   let fullPath = pathname + search + hash;
 
   if (fullPath !== url) {
-    window.history.pushState({}, "", url);
-
     if (dispatch) {
+      window.history.pushState({}, "", url);
       dispatchEvent(new PopStateEvent("popstate"));
+    } else {
+      window.history.replaceState({}, "", url);
     }
   }
 };

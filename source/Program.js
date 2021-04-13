@@ -4,6 +4,20 @@ import "event-propagation-path";
 
 import { navigate } from "./Utils";
 
+const queueTask = (callback) => {
+  if (typeof window.queueMicrotask !== "function") {
+    Promise.resolve()
+      .then(callback)
+      .catch((e) =>
+        setTimeout(() => {
+          throw e;
+        })
+      );
+  } else {
+    window.queueMicrotask(callback);
+  }
+};
+
 class Root extends Component {
   handleClick(event, routes) {
     // If someone prevented default we honor that.
@@ -74,7 +88,10 @@ export default (enums) => {
     constructor() {
       this.root = document.createElement("div");
       document.body.appendChild(this.root);
+
+      this.firstPageLoad = true;
       this.routes = [];
+      this.url = null;
 
       window.addEventListener("popstate", () => {
         this.handlePopState();
@@ -82,40 +99,49 @@ export default (enums) => {
     }
 
     resolvePagePosition() {
-      // On the next frame.
-      requestAnimationFrame(() => {
-        let hashAnchor;
+      // Queue a microTask, this will run after Preact does a render.
+      queueTask(() => {
+        // On the next frame, the DOM should be updated already.
+        requestAnimationFrame(() => {
+          let hashAnchor;
 
-        try {
-          hashAnchor = this.root.querySelector(
-            `a[name="${window.location.hash.slice(1)}"]`
-          );
-        } finally {
-        }
+          try {
+            hashAnchor = this.root.querySelector(
+              `a[name="${window.location.hash.slice(1)}"]`
+            );
+          } finally {
+          }
 
-        if (window.location.hash && hashAnchor) {
-          // This triggers a jump to the hash.
-          window.location.href = window.location.hash;
-        } else {
-          // Otherwise scroll to the top of the page.
-          window.scrollTo(document.body.scrollTop, 0);
-        }
+          if (window.location.hash && hashAnchor) {
+            // This triggers a jump to the hash.
+            window.location.href = window.location.hash;
+          } else if (!this.firstPageLoad) {
+            // Otherwise if its not the first page load scroll to the top of the page.
+            window.scrollTo(document.body.scrollTop, 0);
+          }
+
+          this.firstPageLoad = false;
+        });
       });
     }
 
     handlePopState() {
+      const url =
+        window.location.pathname +
+        window.location.search +
+        window.location.hash;
+
+      if (url === this.url) {
+        return;
+      }
+
       for (let item of this.routes) {
         if (item.path === "*") {
           item.handler();
           this.resolvePagePosition();
         } else {
           let path = new RouteParser(item.path);
-
-          let match = path.match(
-            window.location.pathname +
-              window.location.search +
-              window.location.hash
-          );
+          let match = path.match(url);
 
           if (match) {
             try {
@@ -138,6 +164,8 @@ export default (enums) => {
           }
         }
       }
+
+      this.url = url;
     }
 
     render(main, globals) {
@@ -149,9 +177,7 @@ export default (enums) => {
           this.root
         );
 
-        requestAnimationFrame(() => {
-          this.handlePopState();
-        });
+        this.handlePopState();
       }
     }
 
