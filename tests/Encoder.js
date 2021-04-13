@@ -16,7 +16,7 @@ describe("Encoder.identity", () => {
 
 describe("Encoder.time", () => {
   test("converts it to integer", () => {
-    expect(Encoder.time(new Date(2020, 0, 1))).toBe(1577836800000);
+    expect(Encoder.time(new Date(2020, 0, 1))).toBe(1577833200000);
   });
 });
 

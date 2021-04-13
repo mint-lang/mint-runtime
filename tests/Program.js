@@ -158,7 +158,7 @@ describe("handling navigation", () => {
   test("handles index route", () => {
     program.routes = [indexRoute];
     navigate("/user/2");
-    expect(indexRoute.handler.mock.calls.length).toBe(3);
+    expect(indexRoute.handler.mock.calls.length).toBe(2);
   });
 });
 
