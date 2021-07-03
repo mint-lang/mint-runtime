@@ -1,8 +1,8 @@
 default:
-	yarn build && mv bundle.js ../mint/src/assets/runtime.js
+	yarn build && mv build/bundle.js ../mint/src/assets/runtime.js
 
 build: dc-build
-	mv bundle.js ../mint/src/assets/runtime.js
+	mv build/bundle.js ../mint/src/assets/runtime.js
 
 dc-test: dc-install
 	docker-compose run --rm runtime yarn test
@@ -11,7 +11,7 @@ dc-format: dc-install
 	docker-compose run --rm runtime yarn format
 
 dc-install:
-	docker-compose run --rm runtime yarn
+	docker-compose run --rm runtime yarn install
 
 dc-build: dc-install
 	docker-compose run --rm runtime yarn build
