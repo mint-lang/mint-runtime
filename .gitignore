@@ -1,4 +1,4 @@
-bundle*.js
-test.html
-node_modules
-coverage
+/node_modules/
+/build/
+/coverage/
+

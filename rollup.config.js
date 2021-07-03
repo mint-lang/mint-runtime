@@ -6,7 +6,7 @@ import { terser } from "rollup-plugin-terser";
 export default {
   input: "source/Main.js",
   output: {
-    file: "bundle.js",
+    file: "build/bundle.js",
     name: "Mint",
     format: "iife",
   },
