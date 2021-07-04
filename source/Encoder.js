@@ -4,20 +4,29 @@ const identity = (value) => value;
 
 const time = (value) => {
   const tzo = -value.getTimezoneOffset();
-  const dif = tzo >= 0 ? '+' : '-';
+  const dif = tzo >= 0 ? "+" : "-";
   const pad = (num) => {
     const norm = Math.floor(Math.abs(num));
-    return (norm < 10 ? '0' : '') + norm;
+    return (norm < 10 ? "0" : "") + norm;
   };
 
-  return value.getFullYear() +
-    '-' + pad(value.getMonth() + 1) +
-    '-' + pad(value.getDate()) +
-    'T' + pad(value.getHours()) +
-    ':' + pad(value.getMinutes()) +
-    ':' + pad(value.getSeconds()) +
-    dif + pad(tzo / 60) +
-    ':' + pad(tzo % 60);
+  return (
+    value.getFullYear() +
+    "-" +
+    pad(value.getMonth() + 1) +
+    "-" +
+    pad(value.getDate()) +
+    "T" +
+    pad(value.getHours()) +
+    ":" +
+    pad(value.getMinutes()) +
+    ":" +
+    pad(value.getSeconds()) +
+    dif +
+    pad(tzo / 60) +
+    ":" +
+    pad(tzo % 60)
+  );
 };
 
 const array = (encoder) => (value) => {
