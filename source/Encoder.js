@@ -1,7 +1,7 @@
 import Record from "./Record";
 
 const identity = (value) => value;
-const time = (value) => +value;
+const time = (value) => value.toISOString();
 
 const array = (encoder) => (value) => {
   return value.map((item) => {

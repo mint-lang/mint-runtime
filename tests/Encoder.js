@@ -15,9 +15,9 @@ describe("Encoder.identity", () => {
 });
 
 describe("Encoder.time", () => {
-  test("converts it to integer", () => {
+  test("converts it to an ISO 8601 string", () => {
     const date = new Date(2020, 0, 1);
-    expect(Encoder.time(date)).toBe(+date);
+    expect(Encoder.time(date)).toBe("2020-01-01T00:00:00.000Z");
   });
 });
 
