@@ -1,5 +1,6 @@
 import { Fragment, h, render } from "preact";
 import { createPortal } from "preact/compat";
+import register from "./Register.js";
 
 import {
   format,
@@ -88,6 +89,7 @@ export default (enums) => {
 
     createRecord: create(DecoderWithEnums, enums),
     createPortal: createPortal,
+    register: register,
     createElement: h,
     React: {
       Fragment: Fragment,
