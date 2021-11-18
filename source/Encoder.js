@@ -27,9 +27,17 @@ const maybe = (enums) => (encoder) => (value) => {
   }
 };
 
+const tuple = (encoders) => (value) => {
+  return value.map((item, index) => {
+    const encoder = encoders[index];
+    return encoder ? encoder(item) : item;
+  });
+};
+
 export default (enums) => ({
   maybe: maybe(enums),
   identity: identity,
+  tuple: tuple,
   array: array,
   time: time,
   map: map,

@@ -90,3 +90,13 @@ describe("Array", () => {
     expect(result[1]).toBe("0");
   });
 });
+
+describe("Tuple", () => {
+  test("encodes", () => {
+    const result = Encoder.tuple([(value) => value, null])(["B", "0"]);
+
+    expect(result).toBeInstanceOf(Array);
+    expect(result[0]).toBe("B");
+    expect(result[1]).toBe("0");
+  });
+});

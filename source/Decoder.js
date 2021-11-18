@@ -112,6 +112,22 @@ I was trying to decode the value:
 as an Array, but could not.
 `;
 
+const NOT_A_TUPLE = `
+I was trying to decode the value:
+
+{value}
+
+as an Tuple, but could not.
+`;
+
+const TUPLE_ITEM_MISSING = `
+I was trying to decode one of the values of a tuple:
+
+{value}
+
+but could not.
+`;
+
 const NOT_A_MAP = `
 I was trying to decode the value:
 
@@ -248,6 +264,41 @@ const maybe = (enums) => (decoder) => {
   };
 };
 
+const tuple = (enums) => (decoders) => {
+  return (input) => {
+    const { ok, err } = enums;
+
+    if (!Array.isArray(input)) {
+      return new err(new Error(NOT_A_TUPLE.replace("{value}", format(input))));
+    }
+
+    let results = [];
+    let index = 0;
+
+    for (let decoder of decoders) {
+      if (input[index] === undefined || input[index] === null) {
+        return new err(
+          new Error(TUPLE_ITEM_MISSING.replace("{value}", format(input[index])))
+        );
+      } else {
+        let result = decoder(input[index]);
+
+        if (result instanceof err) {
+          result._0.push({ type: "ARRAY", value: index });
+          result._0.object = input;
+          return result;
+        } else {
+          results.push(result._0);
+        }
+      }
+
+      index++;
+    }
+
+    return new ok(results);
+  };
+};
+
 const map = (enums) => (decoder) => {
   return (input) => {
     const { ok, err } = enums;
@@ -289,6 +340,7 @@ export default (enums) => ({
   field: field(enums),
   array: array(enums),
   maybe: maybe(enums),
+  tuple: tuple(enums),
   time: time(enums),
   map: map(enums),
 });

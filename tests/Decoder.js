@@ -157,6 +157,44 @@ describe("array", () => {
   });
 });
 
+describe("tuple", () => {
+  test("error", () => {
+    const result = Decoder.tuple([Decoder.string])("asd");
+
+    expect(result).toBeInstanceOf(Err);
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
+  });
+
+  test("item error", () => {
+    const input = [0];
+    const result = Decoder.tuple([Decoder.string])(input);
+
+    expect(result).toBeInstanceOf(Err);
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
+    expect(result._0.object).toBe(input);
+    expect(result._0.path.length).toBe(1);
+  });
+
+  test("item missing", () => {
+    const input = [];
+    const result = Decoder.tuple([Decoder.string])(input);
+
+    expect(result).toBeInstanceOf(Err);
+    expect(result._0).toBeInstanceOf(Error);
+    expect(typeof result._0.toString()).toBe("string");
+    expect(result._0.object).toBe(null);
+  });
+
+  test("ok", () => {
+    const result = Decoder.tuple([Decoder.string])(["asd"]);
+
+    expect(result).toBeInstanceOf(Ok);
+    expect(result._0).toEqual(["asd"]);
+  });
+});
+
 describe("maybe", () => {
   test("error", () => {
     const result = Decoder.maybe(Decoder.string)(0);
