@@ -223,26 +223,30 @@ export const array = function () {
 export const style = function (items) {
   const result = {};
 
+  const setKeyValue = (key, value) => {
+    result[key.trim()] = value.trim();
+  };
+
   for (let item of items) {
     if (typeof item === "string") {
       item.split(";").forEach((prop) => {
         const [key, value] = prop.split(":");
 
         if (key && value) {
-          result[key] = value;
+          setKeyValue(key, value);
         }
       });
     } else if (item instanceof Map) {
       for (let [key, value] of item) {
-        result[key] = value;
+        setKeyValue(key, value);
       }
     } else if (item instanceof Array) {
       for (let [key, value] of item) {
-        result[key] = value;
+        setKeyValue(key, value);
       }
     } else {
       for (let key in item) {
-        result[key] = item[key];
+        setKeyValue(key, item[key]);
       }
     }
   }
