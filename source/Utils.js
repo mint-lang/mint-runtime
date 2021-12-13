@@ -224,7 +224,7 @@ export const style = function (items) {
   const result = {};
 
   const setKeyValue = (key, value) => {
-    result[key.trim()] = value.trim();
+    result[key.toString().trim()] = value.toString().trim();
   };
 
   for (let item of items) {
