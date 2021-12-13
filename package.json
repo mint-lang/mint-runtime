@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "rollup -c",
-    "test": "jest",
+    "test": "TZ=UTC jest",
     "lint": "prettier --list-different source/** tests/** rollup.config.js",
     "format": "prettier --write source/** tests/** rollup.config.js"
   },
