@@ -42,7 +42,7 @@ class Component extends HTMLElement {
 }
 
 export default function register(component, tag, props) {
-  const componentClass = class extends Component {}
+  const componentClass = class extends Component {};
 
   componentClass.observedAttributes = props.map((item) => item.original);
   componentClass.component = component;
