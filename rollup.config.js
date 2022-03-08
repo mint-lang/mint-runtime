@@ -36,5 +36,5 @@ export default [
       format: "iife",
       exports: "named",
     },
-  }
+  },
 ];
