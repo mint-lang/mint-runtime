@@ -1,4 +1,4 @@
-import { Route as RouteParser } from "route-parser";
+import RouteParser from "route-parser";
 
 export function isMatchingRoute(request, routes) {
   const { pathname } = new URL(request.url);
