@@ -17,6 +17,7 @@
     "babel-jest": "^26.3.0",
     "date-fns": "^2.16.1",
     "event-propagation-path": "^1.0.5",
+    "fast-equals": "^5.0.1",
     "indent-string": "^4.0.0",
     "jest": "^26.4.2",
     "preact": "10.4.4",
