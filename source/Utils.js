@@ -1,4 +1,3 @@
-import { Equals } from "./Symbols";
 import Record from "./Record";
 
 export const update = (data, newData) => {
@@ -11,20 +10,24 @@ export const update = (data, newData) => {
   }
 };
 
-export const navigate = (url, dispatch = true) => {
+export const navigate = (url, dispatch = true, triggerJump = true, routeInfo = null) => {
   let pathname = window.location.pathname;
   let search = window.location.search;
   let hash = window.location.hash;
-
   let fullPath = pathname + search + hash;
 
   if (fullPath !== url) {
     if (dispatch) {
       window.history.pushState({}, "", url);
-      dispatchEvent(new PopStateEvent("popstate"));
     } else {
       window.history.replaceState({}, "", url);
     }
+  }
+  if (dispatch) {
+    let event = new PopStateEvent("popstate");
+    event.triggerJump = triggerJump;
+    event.routeInfo = routeInfo;
+    dispatchEvent(event);
   }
 };
 
