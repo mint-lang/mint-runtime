@@ -1,6 +1,6 @@
 import { Component, h, render } from "preact";
 import RouteParser from "route-parser";
-import { deepEqual } from 'fast-equals';
+import { deepEqual } from "fast-equals";
 import "event-propagation-path";
 
 import { navigate } from "./Utils";
@@ -23,9 +23,9 @@ class DecodingError extends Error {}
 
 const equals = (a, b) => {
   if (a instanceof Object) {
-    return (b instanceof Object) && deepEqual(a, b);
+    return b instanceof Object && deepEqual(a, b);
   } else {
-    return (!b instanceof Object) && a === b;
+    return !b instanceof Object && a === b;
   }
 };
 
@@ -67,11 +67,16 @@ class Root extends Component {
         if (element.origin === window.location.origin) {
           const fullPath = element.pathname + element.search + element.hash;
           const routes = this.props.routes;
-          const routeInfo = getRouteInfo(fullPath, routes)
+          const routeInfo = getRouteInfo(fullPath, routes);
 
           if (routeInfo) {
             event.preventDefault();
-            navigate(fullPath, /* dispatch */ true, /* triggerJump */ true, routeInfo);
+            navigate(
+              fullPath,
+              /* dispatch */ true,
+              /* triggerJump */ true,
+              routeInfo
+            );
             return;
           }
         }
@@ -125,11 +130,10 @@ export default (enums) => {
             let elem = null;
             try {
               elem =
-                this.root.querySelector(hash)
-                ||
-                this.root.querySelector(`a[name="${hash.slice(1)}"]`)
-                ;
-            } finally {}
+                this.root.querySelector(hash) ||
+                this.root.querySelector(`a[name="${hash.slice(1)}"]`);
+            } finally {
+            }
 
             if (elem) {
               if (triggerJump) {
@@ -140,7 +144,9 @@ export default (enums) => {
                 }
               }
             } else {
-              console.warn(`${hash} matches no element with an id and no link with a name`);
+              console.warn(
+                `${hash} matches no element with an id and no link with a name`
+              );
             }
           } else if (triggerJump) {
             if (isSameRoute) {
@@ -154,17 +160,18 @@ export default (enums) => {
     }
 
     handlePopState(event) {
-      const url = window.location.pathname + window.location.search + window.location.hash;
+      const url =
+        window.location.pathname +
+        window.location.search +
+        window.location.hash;
       const routeInfo = event?.routeInfo || getRouteInfo(url, this.routes);
 
       if (routeInfo) {
         let isSameRoute = true;
 
         if (
-          this.routeInfo === null
-          ||
-          routeInfo.route.path !== this.routeInfo.route.path
-          ||
+          this.routeInfo === null ||
+          routeInfo.route.path !== this.routeInfo.route.path ||
           !equals(routeInfo.vars, this.routeInfo.vars)
         ) {
           isSameRoute = false;

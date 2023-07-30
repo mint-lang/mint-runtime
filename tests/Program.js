@@ -63,7 +63,7 @@ const indexRoute = {
 };
 
 afterEach(() => {
-  jest.resetAllMocks()
+  jest.resetAllMocks();
 });
 
 describe("handling links", () => {

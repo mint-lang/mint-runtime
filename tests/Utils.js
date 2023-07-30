@@ -21,7 +21,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  jest.resetAllMocks()
+  jest.resetAllMocks();
 });
 
 describe("compareObjects", () => {

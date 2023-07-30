@@ -10,7 +10,12 @@ export const update = (data, newData) => {
   }
 };
 
-export const navigate = (url, dispatch = true, triggerJump = true, routeInfo = null) => {
+export const navigate = (
+  url,
+  dispatch = true,
+  triggerJump = true,
+  routeInfo = null
+) => {
   let pathname = window.location.pathname;
   let search = window.location.search;
   let hash = window.location.hash;
