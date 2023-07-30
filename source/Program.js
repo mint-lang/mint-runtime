@@ -199,7 +199,7 @@ export default (enums) => {
           if (error.constructor !== DecodingError) {
             throw error;
           }
-        } finally {}
+        }
       }
     }
 
