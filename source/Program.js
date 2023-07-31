@@ -119,7 +119,7 @@ export default (enums) => {
       });
     }
 
-    resolvePagePosition(triggerJump, isSameRoute) {
+    resolvePagePosition(triggerJump) {
       // Queue a microTask, this will run after Preact does a render.
       queueTask(() => {
         // On the next frame, the DOM should be updated already.
@@ -137,11 +137,7 @@ export default (enums) => {
 
             if (elem) {
               if (triggerJump) {
-                if (isSameRoute) {
-                  elem.scrollIntoView({ behavior: "smooth" });
-                } else {
-                  elem.scrollIntoView();
-                }
+                elem.scrollIntoView();
               }
             } else {
               console.warn(
@@ -149,11 +145,7 @@ export default (enums) => {
               );
             }
           } else if (triggerJump) {
-            if (isSameRoute) {
-              window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-            } else {
-              window.scrollTo(0, 0);
-            }
+            window.scrollTo(0, 0);
           }
         });
       });
@@ -167,18 +159,15 @@ export default (enums) => {
       const routeInfo = event?.routeInfo || getRouteInfo(url, this.routes);
 
       if (routeInfo) {
-        let isSameRoute = true;
-
         if (
           this.routeInfo === null ||
           routeInfo.route.path !== this.routeInfo.route.path ||
           !equals(routeInfo.vars, this.routeInfo.vars)
         ) {
-          isSameRoute = false;
           this.runRouteHandler(routeInfo);
         }
 
-        this.resolvePagePosition(!!event?.triggerJump, isSameRoute);
+        this.resolvePagePosition(!!event?.triggerJump);
       }
 
       this.routeInfo = routeInfo;
