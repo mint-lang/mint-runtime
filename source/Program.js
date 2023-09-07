@@ -1,5 +1,6 @@
 import { Component, h, render } from "preact";
 import RouteParser from "route-parser";
+import { deepEqual } from "fast-equals";
 import "event-propagation-path";
 
 import { navigate } from "./Utils";
@@ -18,8 +19,32 @@ const queueTask = (callback) => {
   }
 };
 
+class DecodingError extends Error {}
+
+const equals = (a, b) => {
+  if (a instanceof Object) {
+    return b instanceof Object && deepEqual(a, b);
+  } else {
+    return !b instanceof Object && a === b;
+  }
+};
+
+const getRouteInfo = (url, routes) => {
+  for (let route of routes) {
+    if (route.path === "*") {
+      return { route: route, vars: false };
+    } else {
+      let vars = new RouteParser(route.path).match(url);
+      if (vars) {
+        return { route: route, vars: vars };
+      }
+    }
+  }
+  return null;
+};
+
 class Root extends Component {
-  handleClick(event, routes) {
+  handleClick(event) {
     // If someone prevented default we honor that.
     if (event.defaultPrevented) {
       return;
@@ -39,23 +64,20 @@ class Root extends Component {
           return;
         }
 
-        let pathname = element.pathname;
-        let origin = element.origin;
-        let search = element.search;
-        let hash = element.hash;
+        if (element.origin === window.location.origin) {
+          const fullPath = element.pathname + element.search + element.hash;
+          const routes = this.props.routes;
+          const routeInfo = getRouteInfo(fullPath, routes);
 
-        if (origin === window.location.origin) {
-          for (let item of this.props.routes) {
-            let partialPath = pathname + search;
-            let fullPath = partialPath + hash;
-            let path = new RouteParser(item.path);
-            let match = item.path == "*" ? true : path.match(fullPath);
-
-            if (match) {
-              event.preventDefault();
-              navigate(fullPath);
-              return;
-            }
+          if (routeInfo) {
+            event.preventDefault();
+            navigate(
+              fullPath,
+              /* dispatch */ true,
+              /* triggerJump */ true,
+              routeInfo
+            );
+            return;
           }
         }
       }
@@ -89,83 +111,92 @@ export default (enums) => {
       this.root = document.createElement("div");
       document.body.appendChild(this.root);
 
-      this.firstPageLoad = true;
       this.routes = [];
-      this.url = null;
+      this.routeInfo = null;
 
-      window.addEventListener("popstate", () => {
-        this.handlePopState();
+      window.addEventListener("popstate", (event) => {
+        this.handlePopState(event);
       });
     }
 
-    resolvePagePosition() {
+    resolvePagePosition(triggerJump) {
       // Queue a microTask, this will run after Preact does a render.
       queueTask(() => {
         // On the next frame, the DOM should be updated already.
         requestAnimationFrame(() => {
-          let hashAnchor;
+          const hash = window.location.hash;
 
-          try {
-            hashAnchor = this.root.querySelector(
-              `a[name="${window.location.hash.slice(1)}"]`
-            );
-          } finally {
+          if (hash) {
+            let elem = null;
+            try {
+              elem =
+                this.root.querySelector(hash) ||
+                this.root.querySelector(`a[name="${hash.slice(1)}"]`);
+            } finally {
+            }
+
+            if (elem) {
+              if (triggerJump) {
+                elem.scrollIntoView();
+              }
+            } else {
+              console.warn(
+                `${hash} matches no element with an id and no link with a name`
+              );
+            }
+          } else if (triggerJump) {
+            window.scrollTo(0, 0);
           }
-
-          if (window.location.hash && hashAnchor) {
-            // This triggers a jump to the hash.
-            window.location.href = window.location.hash;
-          } else if (!this.firstPageLoad) {
-            // Otherwise if its not the first page load scroll to the top of the page.
-            window.scrollTo(document.body.scrollTop, 0);
-          }
-
-          this.firstPageLoad = false;
         });
       });
     }
 
-    handlePopState() {
+    handlePopState(event) {
       const url =
         window.location.pathname +
         window.location.search +
         window.location.hash;
+      const routeInfo = event?.routeInfo || getRouteInfo(url, this.routes);
 
-      if (url === this.url) {
-        return;
+      if (routeInfo) {
+        if (
+          this.routeInfo === null ||
+          routeInfo.route.path !== this.routeInfo.route.path ||
+          !equals(routeInfo.vars, this.routeInfo.vars)
+        ) {
+          this.runRouteHandler(routeInfo);
+        }
+
+        this.resolvePagePosition(!!event?.triggerJump);
       }
 
-      for (let item of this.routes) {
-        if (item.path === "*") {
-          item.handler();
-          this.resolvePagePosition();
-        } else {
-          let path = new RouteParser(item.path);
-          let match = path.match(url);
+      this.routeInfo = routeInfo;
+    }
 
-          if (match) {
-            try {
-              let args = item.mapping.map((name, index) => {
-                const value = match[name];
-                const result = item.decoders[index](value);
+    runRouteHandler(routeInfo) {
+      const { route } = routeInfo;
+      if (route.path === "*") {
+        route.handler();
+      } else {
+        const { vars } = routeInfo;
+        try {
+          let args = route.mapping.map((name, index) => {
+            const value = vars[name];
+            const result = route.decoders[index](value);
 
-                if (result instanceof enums.ok) {
-                  return result._0;
-                } else {
-                  throw "";
-                }
-              });
-
-              item.handler.apply(null, args);
-              this.resolvePagePosition();
-
-              break;
-            } catch (_) {}
+            if (result instanceof enums.ok) {
+              return result._0;
+            } else {
+              throw new DecodingError();
+            }
+          });
+          route.handler.apply(null, args);
+        } catch (error) {
+          if (error.constructor !== DecodingError) {
+            throw error;
           }
         }
       }
-
-      this.url = url;
     }
 
     render(main, globals) {

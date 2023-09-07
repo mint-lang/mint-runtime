@@ -20,6 +20,10 @@ beforeEach(() => {
   console.warn = jest.fn();
 });
 
+afterEach(() => {
+  jest.resetAllMocks();
+});
+
 describe("compareObjects", () => {
   test("compares null and undefined with ===", () => {
     expect(compareObjects(undefined, undefined)).toBe(true);
@@ -76,24 +80,29 @@ describe("update", () => {
 describe("navigate", () => {
   beforeEach(() => {
     window.dispatchEvent = jest.fn();
+    window.window.scrollTo = jest.fn();
   });
 
-  test("navigates to the new URL", () => {
-    navigate("/test");
-    expect(window.location.pathname).toBe("/test");
+  test("`Window.setUrl()` does not dispatch and does not jump", () => {
+    navigate("/foo", /* dispatch */ false);
+    expect(window.location.pathname).toBe("/foo");
+    expect(window.dispatchEvent.mock.calls.length).toBe(0);
+    expect(window.scrollTo.mock.calls.length).toBe(0);
+  });
+
+  test("`Window.navigate()` sets the url and dispatches and does not jump", () => {
+    navigate("/bar", /* dispatch */ true, /* triggerJump */ false);
+    expect(window.location.pathname).toBe("/bar");
     expect(window.dispatchEvent.mock.calls.length).toBe(1);
+    expect(window.scrollTo.mock.calls.length).toBe(0);
   });
 
-  test("navigates to the same URL does nothing", () => {
-    navigate("/test");
-    expect(window.location.pathname).toBe("/test");
-    expect(window.dispatchEvent.mock.calls.length).toBe(0);
-  });
-
-  test("navigates to the new URL does not dispatch", () => {
-    navigate("/testbaha", false);
-    expect(window.location.pathname).toBe("/testbaha");
-    expect(window.dispatchEvent.mock.calls.length).toBe(0);
+  test("`Window.jump()` sets the url and dispatches and jumps if it has a defined route", () => {
+    navigate("/baz", /* dispatch */ true, /* triggerJump */ true);
+    expect(window.location.pathname).toBe("/baz");
+    expect(window.dispatchEvent.mock.calls.length).toBe(1);
+    // Scrolling only happens when the url matches a defined route. This is
+    // currently not tested.
   });
 });
 

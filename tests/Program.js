@@ -62,6 +62,10 @@ const indexRoute = {
   mapping: [],
 };
 
+afterEach(() => {
+  jest.resetAllMocks();
+});
+
 describe("handling links", () => {
   test("it does not navigate to local link that does not have a route", () => {
     let event = new window.Event("click", { bubbles: true });
@@ -134,7 +138,7 @@ describe("handling links", () => {
     program.render($Link);
     program.root.querySelector("a:nth-child(6)").dispatchEvent(event);
 
-    expect(linkRoute.handler.mock.calls.length).toBe(1);
+    expect(linkRoute.handler.mock.calls.length).toBe(0);
   });
 });
 
@@ -158,7 +162,7 @@ describe("handling navigation", () => {
   test("handles index route", () => {
     program.routes = [indexRoute];
     navigate("/user/2");
-    expect(indexRoute.handler.mock.calls.length).toBe(2);
+    expect(indexRoute.handler.mock.calls.length).toBe(1);
   });
 });
 
