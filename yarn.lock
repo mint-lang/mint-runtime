@@ -3798,10 +3798,9 @@ rollup@^2.27.1:
   optionalDependencies:
     fsevents "~2.3.2"
 
-route-parser@^0.0.5:
+route-parser@mint-lang/mint-route-parser:
   version "0.0.5"
-  resolved "https://registry.yarnpkg.com/route-parser/-/route-parser-0.0.5.tgz#7d1d09d335e49094031ea16991a4a79b01bbe1f4"
-  integrity sha512-nsii+MXoNb7NyF05LP9kaktx6AoBVT/7zUgDnzIb5IoYAvYkbZOAuoLJjVdsyEVxWv0swCxWkKDK4cMva+WDBA==
+  resolved "https://codeload.github.com/mint-lang/mint-route-parser/tar.gz/903d07a62fe7649fccb6be6694445ee4217c933e"
 
 rsvp@^4.8.4:
   version "4.8.5"
