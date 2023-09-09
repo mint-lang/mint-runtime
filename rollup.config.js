@@ -15,6 +15,7 @@ export default [
       resolve(),
       commonjs(),
       replace({
+        preventAssignment: true,
         "process.env.NODE_ENV": JSON.stringify("production"),
       }),
       terser({
